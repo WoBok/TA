@@ -8,8 +8,8 @@ def generateCube(index,scaleValue,posValue):
     cmds.move(posValue[0], posValue[1], posValue[2])
 
 x,y,z = 0,0,0
-bbox = cmds.exactWorldBoundingBox("DialPlate")
-origin = cmds.xform("DialPlate",q=1,t=1,ws=1)
+bbox = cmds.exactWorldBoundingBox("Panel")
+origin = cmds.xform("Panel",q=1,t=1,ws=1)
 radius = abs(bbox[3] - bbox[0]) / 2 - 0.5
 angle = 2 * math.pi / 60
 for i in range(60):
