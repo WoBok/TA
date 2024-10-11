@@ -1,5 +1,4 @@
 import pymel.core as pm
-import maya.cmds as cmds
 import math
 
 def generateCube(scaleValue,posValue):
@@ -11,7 +10,7 @@ def generateCube(scaleValue,posValue):
 x,y,z = 0,0,0
 clock_face = pm.PyNode("Dial|Panel")
 bbox = clock_face.getBoundingBox()
-origin = clock_face.translate.get()
+origin = clock_face.getTranslation(space='world')
 radius = bbox.w / 2 - 0.5
 angle = 2 * math.pi / 60
 for i in range(60):
@@ -37,30 +36,29 @@ combineRotation(pm.PyNode("Dial|Minute"), pm.PyNode("Dial|Hour") ,12 ,3)
 attributes = {"Seconds":59,"Minutes":59,"Hours":11}
 for key,value in attributes.items():
     if not clock_face.hasAttr(key):
-        clock_face.addAttr(ln=key, at='double', min=0, max=value, dv=0, k=True);
-        #cmds.addAttr("|Dial|Panel", ln=key, at="double", min=0, max=value, dv=0, k=1)
+        clock_face.addAttr(key, at='double', min=0, max=value, dv=0, k=True)
 
 floatMaths = []
 for i in range(5):
-    floatMaths.append(cmds.shadingNode("floatMath", au=1))
+    floatMaths.append(pm.createNode("floatMath"))
 
 operations = [2, 2, 0, 0, 2]
 for i in range(5):
-    cmds.setAttr(f"{floatMaths[i]}.operation", operations[i])
+    floatMaths[i].operation.set(operations[i])
 
 floatBs = {0:3600, 1:60, 4:-6}
-for key,value in floatBs.items():       
-    cmds.setAttr(f"{floatMaths[key]}.floatB", value)
+for key,value in floatBs.items():
+    floatMaths[key].floatB.set(value)
 
 connections = {
-    "Panel.Hours" : f"{floatMaths[0]}.floatA",
-    "Panel.Minutes" : f"{floatMaths[1]}.floatA",
-    "Panel.Seconds" : f"{floatMaths[3]}.floatB", 
-    f"{floatMaths[0]}.outFloat" : f"{floatMaths[2]}.floatA",
-    f"{floatMaths[1]}.outFloat" : f"{floatMaths[2]}.floatB",
-    f"{floatMaths[2]}.outFloat" : f"{floatMaths[3]}.floatA",
-    f"{floatMaths[3]}.outFloat" : f"{floatMaths[4]}.floatA",
-    f"{floatMaths[4]}.outFloat" : "Second.rotateY",
+    pm.PyNode("Dial|Panel").Hours: floatMaths[0].floatA,
+    pm.PyNode("Dial|Panel").Minutes : floatMaths[1].floatA,
+    pm.PyNode("Dial|Panel").Seconds: floatMaths[3].floatB, 
+    floatMaths[0].outFloat : floatMaths[2].floatA,
+    floatMaths[1].outFloat : floatMaths[2].floatB,
+    floatMaths[2].outFloat : floatMaths[3].floatA,
+    floatMaths[3].outFloat : floatMaths[4].floatA,
+    floatMaths[4].outFloat : pm.PyNode("Dial|Second").rotateY,
     }
 for key,value in connections.items():
-    cmds.connectAttr(key, value, f=1)
+    key >> value
