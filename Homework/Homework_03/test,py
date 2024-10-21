@@ -1,0 +1,24 @@
+import math
+
+radius = 1
+
+height = 3
+
+brickSize = {'w': 0.24, 'd': 0.053, 'h': 0.115}
+
+rad = brickSize['w'] / radius
+
+currentRad = 0
+y = 0
+
+while currentRad <= 2 * math.pi:
+    x = radius * math.cos(currentRad)
+    z = radius * math.sin(currentRad)
+    print(f"rad:{currentRad}, angle: {math.degrees(currentRad)}")
+    currentRad += rad
+# while y <= height:
+
+#     currentRad = 0
+#     y += brickSize['h']
+
+
