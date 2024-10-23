@@ -51,7 +51,7 @@ radius = 1
 height = 3
 
 horizontalPos = 0.2
-horizontalWidth = 0.2
+horizontalWidth = 0.7
 
 horizRadPivot = horizontalPos * 2 * math.pi
 horizRadHalfWidth = horizontalWidth * 2 * math.pi / 2

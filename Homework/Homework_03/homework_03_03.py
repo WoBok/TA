@@ -2,6 +2,15 @@ import pymel.core as pm
 import math
 
 
+#math_extensions
+def clamp(value, min, max):
+    if value < min:
+        value = min
+    elif value > max:
+        value = max
+    return value
+
+
 # modul Vector2---------------------------------------------------------------------
 class Vector2:
 
@@ -25,47 +34,33 @@ class Vector2:
             print("The divisor cannot be zero. The result remains unchanged.")
             return self
 
+    def magnitude(v):
+        return math.sqrt(v.x * v.x + v.y * v.y)
 
-def clamp(value, min, max):  # 将下列函数封装到vector2,静态函数怎么定义？
-    if value < min:
-        value = min
-    elif value > max:
-        value = max
-    return value
+    def sqrMagnitude(v):  # the squared length of this vector
+        return v.x * v.x + v.y * v.y
 
+    def normalize(v):
+        mag = Vector2.magnitude(v)
+        if mag < 1e-15:
+            return Vector2(0, 0)
+        return v / mag
 
-def magnitude(v):
-    return math.sqrt(v.x * v.x + v.y * v.y)
+    def dot(v1, v2):
+        return v1.x * v2.x + v1.y * v2.y
 
+    def cross(v1, v2):  # 用于判断向量的方位
+        return v1.x * v2.y + v1.y * v2.x
 
-def sqrMagnitude(v):  # the squared length of this vector
-    return v.x * v.x + v.y * v.y
-
-
-def normalize(v):
-    mag = magnitude(v)
-    if mag < 1e-15:
-        return Vector2(0, 0)
-    return v / mag
-
-
-def dot(v1, v2):
-    return v1.x * v2.x + v1.y * v2.y
-
-
-def cross(v1, v2):  # 用于判断向量的方位
-    return v1.x * v2.y + v1.y * v2.x
-
-
-def rad(v1, v2):
-    v1SqrMagnitude = sqrMagnitude(v1)
-    v2SqrMagnitude = sqrMagnitude(v2)
-    num1 = math.sqrt(v1SqrMagnitude * v2SqrMagnitude)
-    if num1 < 1e-15:
-        return 0
-    v1dotv2 = dot(v1, v2)
-    num2 = clamp(v1dotv2 / num1, -1, 1)
-    return math.acos(num2)
+    def rad(v1, v2):
+        v1SqrMagnitude = Vector2.sqrMagnitude(v1)
+        v2SqrMagnitude = Vector2.sqrMagnitude(v2)
+        num1 = math.sqrt(v1SqrMagnitude * v2SqrMagnitude)
+        if num1 < 1e-15:
+            return 0
+        v1dotv2 = Vector2.dot(v1, v2)
+        num2 = clamp(v1dotv2 / num1, -1, 1)
+        return math.acos(num2)
 
 
 # modul Vector2---------------------------------------------------------------------
@@ -122,16 +117,16 @@ while y <= height + yOffset:
             math.cos(currentLayerRad - horizRadRange[0]),
             math.sin(currentLayerRad - horizRadRange[0]),
         ) * radius)
-        brickForwardVecL = normalize(Vector2(-brickHeadVecL.y,
-                                             brickHeadVecL.x))
+        brickForwardVecL = Vector2.normalize(
+            Vector2(-brickHeadVecL.y, brickHeadVecL.x))
         brickTailVecL = brickHeadVecL + (brickForwardVecL * brickSize["d"])
 
         brickHeadVecR = (Vector2(
             math.cos(currentLayerRad - horizRadRange[1]),
             math.sin(currentLayerRad - horizRadRange[1]),
         ) * radius)
-        brickForwardVecR = normalize(Vector2(-brickHeadVecR.y,
-                                             brickHeadVecR.x))
+        brickForwardVecR = Vector2.normalize(
+            Vector2(-brickHeadVecR.y, brickHeadVecR.x))
         brickTailVecR = brickHeadVecR + (brickForwardVecR * brickSize["d"])
 
         scale = (brickSize["w"], brickSize["h"], brickSize["d"])
@@ -139,15 +134,18 @@ while y <= height + yOffset:
         if (y >= vertiRange[0]) and (y < vertiRange[1]):
             if horizWidth <= 0.5:
                 if horizWidth > 0:
-                    if (cross(rightVec, brickHeadVecL) > 0
-                            and cross(rightVec, brickTailVecR) < 0):  # 中间部位不生成
+                    if (Vector2.cross(rightVec, brickHeadVecL) > 0
+                            and Vector2.cross(rightVec,
+                                              brickTailVecR) < 0):  # 中间部位不生成
                         continue
-                    elif (cross(rightVec, brickHeadVecL) < 0
-                          and cross(rightVec, brickTailVecL) > 0):  # 左侧部位裁剪
-                        d = magnitude(rightVec - brickHeadVecL)
+                    elif (Vector2.cross(rightVec, brickHeadVecL) < 0
+                          and Vector2.cross(rightVec,
+                                            brickTailVecL) > 0):  # 左侧部位裁剪
+                        d = Vector2.magnitude(rightVec - brickHeadVecL)
                         scale = (brickSize["w"], brickSize["h"], d)
-                    elif (cross(rightVec, brickHeadVecR) < 0
-                          and cross(rightVec, brickTailVecR) > 0):  # 右侧部位裁剪
+                    elif (Vector2.cross(rightVec, brickHeadVecR) < 0
+                          and Vector2.cross(rightVec,
+                                            brickTailVecR) > 0):  # 右侧部位裁剪
                         offset = rightVec * radius - brickHeadVecR
                         position = (
                             radius * math.cos(horizRadRange[1]) +
@@ -156,7 +154,7 @@ while y <= height + yOffset:
                             radius * math.sin(horizRadRange[1]) +
                             originPoint.z,
                         )
-                        d = magnitude(brickTailVecR - rightVec)
+                        d = Vector2.magnitude(brickTailVecR - rightVec)
                         scale = (brickSize["w"], brickSize["h"], d)
                     else:  # 不裁剪
                         scale = (brickSize["w"], brickSize["h"],
@@ -164,22 +162,22 @@ while y <= height + yOffset:
             else:
                 if horizWidth >= 1:
                     continue
-                if (cross(rightVec, brickHeadVecR) > 0
-                        and cross(rightVec, brickTailVecL) < 0):
+                if (Vector2.cross(rightVec, brickHeadVecR) > 0
+                        and Vector2.cross(rightVec, brickTailVecL) < 0):
                     scale = (brickSize["w"], brickSize["h"], brickSize["d"])
-                elif (cross(rightVec, brickHeadVecL) < 0
-                      and cross(rightVec, brickTailVecL) > 0):  # 左侧部位裁剪
-                    d = magnitude(rightVec - brickHeadVecL)
+                elif (Vector2.cross(rightVec, brickHeadVecL) < 0 and
+                      Vector2.cross(rightVec, brickTailVecL) > 0):  # 左侧部位裁剪
+                    d = Vector2.magnitude(rightVec - brickHeadVecL)
                     scale = (brickSize["w"], brickSize["h"], d)
-                elif (cross(rightVec, brickHeadVecR) < 0
-                      and cross(rightVec, brickTailVecR) > 0):  # 右侧部位裁剪
+                elif (Vector2.cross(rightVec, brickHeadVecR) < 0 and
+                      Vector2.cross(rightVec, brickTailVecR) > 0):  # 右侧部位裁剪
                     offset = rightVec * radius - brickHeadVecR
                     position = (
                         radius * math.cos(horizRadRange[1]) + originPoint.x,
                         position[1],
                         radius * math.sin(horizRadRange[1]) + originPoint.z,
                     )
-                    d = magnitude(brickTailVecR - rightVec)
+                    d = Vector2.magnitude(brickTailVecR - rightVec)
                     scale = (brickSize["w"], brickSize["h"], d)
                 else:
                     continue
