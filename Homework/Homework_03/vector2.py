@@ -1,10 +1,10 @@
 import math
 import math_extensions as mathex
+
 """封装便于操作二维向量的类"""
 
 
 class Vector2:
-
     def __init__(self, x, y):
         self.x = x
         self.y = y
