@@ -21,7 +21,8 @@ def initialize_exp(selected_obj):
 
 def create_joint_pair(face, parent):
     face_points = face.getPoints(space='world')  #获得当前面的所有顶点
-    face_position = sum([p for p in face_points]) / len(face_points)  #计算被选择面的中心位置
+    face_position = sum([p for p in face_points]) / len(
+        face_points)  #计算被选择面的中心位置
     jnt1 = pm.joint(p=face_position, rad=joint_radius)
     pm.parent(jnt1, parent)
 
