@@ -24,10 +24,9 @@ class TimeTable:
 
     # 创建时间表
     def _create_time_table(self, path, file_name):
-        directory_path = os.path.dirname(path)
-        file_path = os.path.join(directory_path, file_name)
-
-        self._create_dir(directory_path)
+        file_path = os.path.join(path, file_name)
+        print(path)
+        self._create_dir(path)
         self._create_file(file_path)
 
     # 遍历解析json得到的字典
