@@ -1,10 +1,40 @@
 import json
 import os
-
+import time
 
 class TimeTable:
+
     def __init__(self):
         pass
+
+    def _get_date(self, date):
+        split_str = date.split('/')
+        year = split_str[1]
+        month_day = split_str[3].split(' ')
+        month = month_day[0]
+        day = month_day[1]
+
+        return (year, month, day)
+
+
+    def _get_formated_dates(self, date):
+        year, month, day = self._get_date(date)
+        
+        date_str = f"{year} {month:02d} {day:02d}"
+        time_tuple = time.strptime(date_str, "%Y %m %d")
+        day_of_week = time.strftime("%A", time_tuple)
+
+        datas = []
+        for h in range(-11,12):
+            formated_date = f"{month} {day} {year}"
+            datas[h] = formated_date
+            
+        return formated_date
+    def _get_time_table_content(self, date):
+        formated_date = self._get_date(date)
+
+        print(formated_date)
+        return "content"
 
     # 创建时间表文件夹
     def _create_dir(self, path):
@@ -15,19 +45,20 @@ class TimeTable:
             print(f"Error creating directories: {e}")
 
     # 创建时间表文件
-    def _create_file(self, file_path):
+    def _create_file(self, path, file_name):
+        file_path = os.path.join(path, file_name)
+
         try:
             with open(file_path, "w") as file:
-                file.write("This is the content of the file.\n")
+                content = self._get_time_table_content(path)
+                file.write(content)
         except Exception as e:
             print(f"Error creating file: {e}")
 
     # 创建时间表
     def _create_time_table(self, path, file_name):
-        file_path = os.path.join(path, file_name)
-        print(path)
         self._create_dir(path)
-        self._create_file(file_path)
+        self._create_file(path, file_name)
 
     # 遍历解析json得到的字典
     def _iterate_time_table(self, date_dict, path):
