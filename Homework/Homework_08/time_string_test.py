@@ -28,3 +28,7 @@ time_tuple = time.strptime(date_str, "%B")
 short_month = time.strftime("%b", time_tuple)
 
 print(short_month)
+
+a = (1,2,3,4)
+b=(2,3,4,5)
+print(a+b)
