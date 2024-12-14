@@ -144,6 +144,7 @@ class Selector:
             print('surface_shader: '+surface_shader)
             btn_label = surface_shader.name()
             faces = shading_group.members()[0]
+            print(type(faces))
             btn = iconTextButton(
                 style='textOnly',
                 label=f'{btn_label} ({len(faces)})',
