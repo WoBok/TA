@@ -5,12 +5,13 @@ from pymel.core import *
 from functools import reduce, partial
 import logging
 
+
 # logger = logging.getLogger('MeshSelectToolLogger')
 #
 # for handler in logger.handlers:
 #     logger.removeHandler(handler)
 # file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# file_handler = logging.FileHandler(os.path.dirname(os.path.abspath('reference.py')) + '/app.log')
+# file_handler = logging.FileHandler(os.path.dirname(__file__) + '/app.log')
 # file_handler.setLevel(logging.DEBUG)
 # file_handler.setFormatter(file_formatter)
 # logger.addHandler(file_handler)
@@ -137,17 +138,14 @@ class Selector:
     def add_buttons(self, obj, frame):
         # self.logger.debug(f'Mesh - {obj}')
         shape = obj.getShape()
-        shading_engine_nodes = shape.inputs(type='shadingEngine')
-        print(shading_engine_nodes)
+        shading_engine_nodes = shape.outputs(type='shadingEngine')
         for shading_group in list(set(shading_engine_nodes)):
             surface_shader = shading_group.surfaceShader.inputs()[0]
-            print('surface_shader: '+surface_shader)
             btn_label = surface_shader.name()
             faces = shading_group.members()[0]
-            print(type(faces))
             btn = iconTextButton(
                 style='textOnly',
-                label=f'{btn_label} ({len(faces)})',
+                label=f'{btn_label}',  # ({len(faces)})
                 parent=frame,
                 enableBackground=True,
             )
@@ -181,6 +179,7 @@ class Selector:
             select(btn.data, deselect=True)
             btn.isHighlighted = False
         else:
+            print(type(btn.data))
             select(btn.data, replace=True)
             for b in self.btns:
                 b.isHighlighted = False
@@ -214,7 +213,6 @@ class Selector:
         self.btns = []
         self.select_set.clear()
         ann = []
-        print(self.objects)
         for obj in self.objects:
             self.nameField.setText(obj.name())
             ann.append(obj.name())
