@@ -6,13 +6,15 @@ class MaterialExplorer:
 
     def __init__(self):
         self.winTitle = 'Material Explorer'
+        self.window = None
         self.material_ui = None
         self.selected_obj_button_layout = None
 
     def create_dockable_window(self):
         if pm.workspaceControl(self.winTitle, exists=True):
             pm.deleteUI(self.winTitle)
-        self.window = pm.workspaceControl(self.winTitle, retain=False, floating=True)
+        self.window = pm.workspaceControl(self.winTitle, retain=False, floating=True, initialWidth=350,
+                                          initialHeight=800)
         self.create_ui()
         self.bind_jobs()
 
@@ -23,7 +25,8 @@ class MaterialExplorer:
         with pm.formLayout() as formLayout:
             with pm.menuBarLayout() as menuBarLayout:
                 self.create_menu()
-            with pm.columnLayout(adjustableColumn=True, visible=False) as self.material_inspector_layout:
+            with pm.columnLayout(adjustableColumn=True, visible=False,
+                                 backgroundColor=(0.5, 0.5, 0.5)) as self.material_inspector_layout:
                 pass
             with pm.scrollLayout(childResizable=True) as scrollLayout:
                 self.create_obj_buttons()
@@ -74,10 +77,15 @@ class MaterialExplorer:
             for material in materials:
                 all_materials.append(material)
         self.delete_last_material_ui()
-        with pm.frameLayout(label=obj.name(), parent=parent, collapsable=True,
-                            backgroundColor=(0.5, 0.5, 0.5)) as self.material_ui:
-            for material in all_materials:
-                pm.button(label=material.name(), command=partial(self.creat_material_inspector_ui, material))
+        with pm.formLayout(parent=parent) as formLayout:
+            with pm.frameLayout(label=obj.name(), collapsable=True,
+                                backgroundColor=(0.5, 0.5, 0.5)) as self.material_ui:
+                for material in all_materials:
+                    pm.button(label=material.name(), command=partial(self.creat_material_inspector_ui, material))
+        formLayout.attachForm(self.material_ui, 'top', 0)
+        formLayout.attachForm(self.material_ui, 'left', 10)
+        formLayout.attachForm(self.material_ui, 'right', 10)
+        formLayout.attachForm(self.material_ui, 'bottom', 5)
 
     def delete_last_material_ui(self):
         if self.material_ui:
@@ -89,25 +97,14 @@ class MaterialExplorer:
         parent.setVisible(True)
         parent.clear()
         mat_specular_color = pm.getAttr(material + '.specularColor')
-        pm.colorSliderButtonGrp(label='Specular Color', buttonLabel='Set', adjustableColumn=3,
+        pm.colorSliderButtonGrp(label='Specular Color', buttonLabel='Reset', adjustableColumn=3,
                                 columnAttach=(1, 'right', 5),
                                 rgb=mat_specular_color, parent=parent)
         mat_metalness = pm.getAttr(material + '.metalness')
-        pm.floatSliderButtonGrp(label='Metalness', field=True, buttonLabel='Set', minValue=0, maxValue=1,
+        pm.floatSliderButtonGrp(label='Metalness', field=True, buttonLabel='Reset', minValue=0, maxValue=1,
                                 sliderStep=0.001,
                                 adjustableColumn=3,
                                 columnAttach=(1, 'right', 5), value=mat_metalness, parent=parent)
-        # pm.text(label=f'Metalness: {mat_metalness}', align='left', parent=parent)
-        print(type(material))
-        print(vars(material))
-        # print(dir(material))
-        # print(set(dir(material)) - set(dir(type(material))))
-        # print(material.__class__.__bases__)
-        # i = material.inputs()
-        # print(i)
-        # pm.setAttr(material + '.baseColor', 1, 0, 0)
-        # print(dir(parent))
-        # pm.button(label=material.name(), parent=parent)
 
 
 materialExplorer = MaterialExplorer()
