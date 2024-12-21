@@ -153,7 +153,7 @@ class MaterialExplorer:
         parent = self.material_inspector_layout
         parent.setVisible(True)
         parent.clear()
-        self.create_mi_control_ui(material, parent)
+        self.set_mi_control_value(material, parent)
 
     def mat_button_selected_additive(self, btn):
         material = btn.material
@@ -169,14 +169,15 @@ class MaterialExplorer:
             self.selected_mat_btns.append(btn)
             btn.setBackgroundColor(Colors.MAT_BTN_SELECTED_COLOR)
             btn.is_selected = True
+            print(len(self.selected_mat_btns))
+            if len(self.selected_mat_btns) >= 2:
 
-            # if len(self.selected_mat_btns) >= 2:
-            #     if type(self.selected_mat_btns[-1]) is not type(self.selected_mat_btns[-2]):
-            #         parent.clear()
-            #         parent.setVisible(False)
+                if type(self.selected_mat_btns[-1]) is not type(self.selected_mat_btns[-2]):
+                    parent.clear()
+                    parent.setVisible(False)
 
         if len(self.selected_mat_btns) == 1:
-            self.create_mi_control_ui(material, parent)
+            self.set_mi_control_value(material, parent)
 
         if not self.selected_mat_btns:
             parent.clear()
@@ -191,7 +192,7 @@ class MaterialExplorer:
 
     # ------------------------------mat control ui------------------------------
     # mi:material inspector
-    def create_mi_control_ui(self, material, parent):
+    def set_mi_control_value(self, material, parent):
         self.create_mi_base_color_ui(material, parent)
         self.create_mi_specular_color_ui(material, parent)
         self.create_mi_bump_depth_ui(material, parent)
@@ -209,16 +210,6 @@ class MaterialExplorer:
     def create_mi_specular_color_ui(self, material, parent):
         if pm.hasAttr(material, 'specularColor'):
             self.create_mi_color_slider_ui('Specular Color', material, 'specularColor', parent)
-
-    def create_mi_color_slider_ui(self, label, node, attr, parent):
-        attr_color = pm.getAttr(f"{node}.{attr}")
-        node_color_slider = pm.colorSliderButtonGrp(label=label, buttonLabel='Reset',
-                                                    adjustableColumn=3,
-                                                    columnAttach=(1, 'right', 5), rgb=attr_color,
-                                                    parent=parent)
-        node_color_slider.node = node
-        node_color_slider.attr = attr
-        node_color_slider.changeCommand(partial(self.set_mat_color_attr, node_color_slider))
 
     def create_mi_bump_depth_ui(self, material, parent):
         mat_bump2ds = material.inputs(type='bump2d')
@@ -241,6 +232,22 @@ class MaterialExplorer:
 
             self.create_mi_float_slider_ui('Metallic Strength', mat_metallic_strength_constant, 'inFloat', parent)
             self.create_mi_float_slider_ui('Roughness Strength', mat_roughness_strength_constant, 'inFloat', parent)
+
+    def create_mi_control_ui(self, parent):
+        color_control_info = {'Base Color': (1, 1, 1), 'Specular Color': (1, 1, 1)}
+        float_control_info = {'Bump Depth': 1, 'Metallic Strength': 1, 'Roughness Strength': 1}
+        for label,node in color_control_info:
+            pass
+
+    def create_mi_color_slider_ui(self, label, node, attr, parent):
+        attr_color = pm.getAttr(f"{node}.{attr}")
+        node_color_slider = pm.colorSliderButtonGrp(label=label, buttonLabel='Reset',
+                                                    adjustableColumn=3,
+                                                    columnAttach=(1, 'right', 5), rgb=attr_color,
+                                                    parent=parent)
+        node_color_slider.node = node
+        node_color_slider.attr = attr
+        node_color_slider.changeCommand(partial(self.set_mat_color_attr, node_color_slider))
 
     def create_mi_float_slider_ui(self, label, node, attr, parent):
         if node:
