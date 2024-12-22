@@ -30,34 +30,25 @@ class MaterialExplorer:
     def create_dockable_window(self):
         if pm.workspaceControl(self.winTitle, exists=True):
             pm.deleteUI(self.winTitle)
-        self.window = pm.workspaceControl(self.winTitle,
-                                          retain=False,
-                                          floating=True,
-                                          initialWidth=350,
+        self.window = pm.workspaceControl(self.winTitle, retain=False, floating=True, initialWidth=350,
                                           initialHeight=800)
         self.create_ui_layout()
         self.bind_jobs()
 
     # 绑定场景打开时的任务
     def bind_jobs(self):
-        pm.scriptJob(event=['SceneOpened', self.create_dockable_window],
-                     parent=self.window,
-                     rp=True)
+        pm.scriptJob(event=['SceneOpened', self.create_dockable_window], parent=self.window, rp=True)
 
     # 创建ui布局
     def create_ui_layout(self):
         with pm.formLayout() as formLayout:
             with pm.menuBarLayout() as menuBarLayout:  # 创建菜单布局
                 self.create_menu()
-            with pm.columnLayout(
-                    adjustableColumn=True,
-                    visible=False,
-                    backgroundColor=Colors.MOD_BTN_SELECTED_COLOR
-            ) as self.mi_layout:  # 创建材质属性布局 # mi:material inspector
+            with pm.columnLayout(adjustableColumn=True, visible=False,
+                                 backgroundColor=Colors.MOD_BTN_SELECTED_COLOR) as self.mi_layout:  # 创建材质属性布局 # mi:material inspector
                 self.mi_layout.sliders = {}  # 被创建的slider将缓存至此列表
                 self.create_mi_slider_ui()
-            with pm.scrollLayout(
-                    childResizable=True) as scrollLayout:  # 创建模型按钮布局
+            with pm.scrollLayout(childResizable=True) as scrollLayout:  # 创建模型按钮布局
                 self.create_mod_buttons()
 
         formLayout.attachForm(menuBarLayout, 'top', 0)
@@ -78,13 +69,9 @@ class MaterialExplorer:
         with pm.menu(label='Selection Mode', tearOff=True) as self.editMenu:
             pm.menuItem(divider=True, dividerLabel='Selection Mode')
             pm.radioMenuItemCollection()
-            pm.menuItem(label='Exclusive',
-                        radioButton=not bool(
-                            pm.optionVar['MaterialExplorer_SelectMode']),
+            pm.menuItem(label='Exclusive', radioButton=not bool(pm.optionVar['MaterialExplorer_SelectMode']),
                         command=self.exclusive_menu_command)
-            pm.menuItem(label='Additive',
-                        radioButton=bool(
-                            pm.optionVar['MaterialExplorer_SelectMode']),
+            pm.menuItem(label='Additive', radioButton=bool(pm.optionVar['MaterialExplorer_SelectMode']),
                         command=self.additive_menu_command)
 
     # 单选菜单命令
@@ -107,9 +94,6 @@ class MaterialExplorer:
             btn.is_selected = False
         self.selected_mod_btns.clear()
 
-        for btn in self.selected_mat_btns:  # Todo
-            #btn.is_selected = False
-            pass
         self.selected_mat_btns.clear()
 
         self.mi_layout.setVisible(False)
@@ -129,8 +113,7 @@ class MaterialExplorer:
                     shape = mod.getShape()
                     btn = pm.button(label=mod.name())
                     btn.setCommand(partial(self.mod_button_selected, btn))
-                    btn.materials = self.get_shape_materials(
-                        shape)  # 模型按钮关联的材质
+                    btn.materials = self.get_shape_materials(shape)  # 模型按钮关联的材质
                     btn.is_selected = False
                     btn.shape = shape  # 模型按钮关联的shape
                     btn.parent = cl
@@ -202,16 +185,14 @@ class MaterialExplorer:
             # 从材质按钮缓存中删除与当前按钮关联的材质按钮
             btn_mat_names = [mat.name() for mat in btn.materials]
             self.selected_mat_btns = list(
-                filter(lambda mat_btn: mat_btn.getLabel() not in btn_mat_names,
-                       self.selected_mat_btns))
+                filter(lambda mat_btn: mat_btn.getLabel() not in btn_mat_names, self.selected_mat_btns))
 
             self.selected_mod_btns.remove(btn)  # 从模型按钮缓存中删除当前按钮
             btn.material_ui.delete()  # 删除模型按钮关联的材质按钮
             self.check_slider_enable()  # 检查材质面板中的属性是否需要开启
         else:
             pm.select(btn.shape, add=True)
-            btn.parent.setBackgroundColor(
-                Colors.MOD_BTN_SELECTED_COLOR)  # 高亮按钮
+            btn.parent.setBackgroundColor(Colors.MOD_BTN_SELECTED_COLOR)  # 高亮按钮
             self.create_mat_buttons(btn)  # 创建模型按钮关联的材质按钮
             btn.is_selected = True
             self.selected_mod_btns.append(btn)  # 将当前按钮加入模型按钮缓存中
@@ -225,14 +206,11 @@ class MaterialExplorer:
     # 创建模型按钮关联的所有材质按钮
     def create_mat_buttons(self, btn):
         with pm.formLayout(parent=btn.parent) as formLayout:
-            with pm.frameLayout(label=f"The material of {btn.shape.name()}",
-                                collapsable=True,
-                                backgroundColor=Colors.MOD_BTN_SELECTED_COLOR
-                                ) as btn.material_ui:
+            with pm.frameLayout(label=f"The material of {btn.shape.name()}", collapsable=True,
+                                backgroundColor=Colors.MOD_BTN_SELECTED_COLOR) as btn.material_ui:
                 for material in btn.materials:
                     mat_btn = pm.button(label=material.name())
-                    mat_btn.setCommand(
-                        partial(self.mat_button_selected, mat_btn))
+                    mat_btn.setCommand(partial(self.mat_button_selected, mat_btn))
                     mat_btn.material = material  # 材质按钮关联的材质
                     mat_btn.is_selected = False
                     mat_btn.mat_attrs = {}  # 材质按钮关联的材质属性
@@ -264,8 +242,7 @@ class MaterialExplorer:
         btn.setBackgroundColor(Colors.MAT_BTN_SELECTED_COLOR)  # 高亮被选择的按钮
 
         if self.selected_mat_btns:
-            self.selected_mat_btns[0].setBackgroundColor(
-                Colors.MOD_BTN_SELECTED_COLOR)  # 取消缓存按钮的高亮
+            self.selected_mat_btns[0].setBackgroundColor(Colors.MOD_BTN_SELECTED_COLOR)  # 取消缓存按钮的高亮
 
         if btn.is_selected:
             self.selected_mat_btns.remove(btn)  # 清除按钮缓存
@@ -331,28 +308,16 @@ class MaterialExplorer:
 
     # color slider控件创建逻辑
     def create_mi_color_slider_ui(self, attr_name, value):
-        node_color_slider = pm.colorSliderGrp(label=attr_name,
-                                              adjustableColumn=3,
-                                              columnAttach=(1, 'right', 5),
-                                              height=25,
-                                              rgb=value)
-        node_color_slider.changeCommand(
-            partial(self.set_mat_color_attr, attr_name))
+        node_color_slider = pm.colorSliderGrp(label=attr_name, adjustableColumn=3, columnAttach=(1, 'right', 5),
+                                              height=25, rgb=value)
+        node_color_slider.changeCommand(partial(self.set_mat_color_attr, attr_name))
         self.mi_layout.sliders[attr_name] = node_color_slider
 
-    #float slider控件创建逻辑
+    # float slider控件创建逻辑
     def create_mi_float_slider_ui(self, attr_name, value):
-        node_float_slider = pm.floatSliderGrp(label=attr_name,
-                                              field=True,
-                                              minValue=0,
-                                              maxValue=1,
-                                              sliderStep=0.001,
-                                              adjustableColumn=3,
-                                              columnAttach=(1, 'right', 5),
-                                              height=25,
-                                              value=value)
-        node_float_slider.changeCommand(
-            partial(self.set_mat_float_attr, attr_name))
+        node_float_slider = pm.floatSliderGrp(label=attr_name, field=True, minValue=0, maxValue=1, sliderStep=0.001,
+                                              adjustableColumn=3, columnAttach=(1, 'right', 5), height=25, value=value)
+        node_float_slider.changeCommand(partial(self.set_mat_float_attr, attr_name))
         self.mi_layout.sliders[attr_name] = node_float_slider
 
     # 材质float属性赋值逻辑
@@ -384,23 +349,18 @@ class MaterialExplorer:
             mat_ai_multiplies = btn.material.inputs(type='aiMultiply')
             if mat_ai_multiplies:
                 mat_ai_multiply = mat_ai_multiplies[0]
-                mat_color_constants = mat_ai_multiply.inputs(
-                    type='colorConstant')
+                mat_color_constants = mat_ai_multiply.inputs(type='colorConstant')
                 if mat_color_constants:
                     mat_base_color_constant = mat_color_constants[0]
-                    self.set_color_slider_value(mat_base_color_constant,
-                                                'inColor', 'Base Color')
-                    btn.mat_attrs[
-                        'Base Color'] = f'{mat_base_color_constant}.inColor'
+                    self.set_color_slider_value(mat_base_color_constant, 'inColor', 'Base Color')
+                    btn.mat_attrs['Base Color'] = f'{mat_base_color_constant}.inColor'
 
     # 对材质属性面板的specular color属性赋值
     def set_mi_specular_color_value(self, btn):
         if 'Specular Color' in self.mi_layout.sliders:
             if pm.hasAttr(btn.material, 'specularColor'):
-                self.set_color_slider_value(btn.material, 'specularColor',
-                                            'Specular Color')
-                btn.mat_attrs[
-                    'Specular Color'] = f'{btn.material}.specularColor'
+                self.set_color_slider_value(btn.material, 'specularColor', 'Specular Color')
+                btn.mat_attrs['Specular Color'] = f'{btn.material}.specularColor'
 
     # color slider赋值逻辑
     def set_color_slider_value(self, node, attr, slider_name):
@@ -414,8 +374,7 @@ class MaterialExplorer:
             mat_bump2ds = btn.material.inputs(type='bump2d')
             if mat_bump2ds:
                 mat_bump2d = mat_bump2ds[0]
-                self.set_float_slider_value(mat_bump2d, 'bumpDepth',
-                                            'Bump Depth')
+                self.set_float_slider_value(mat_bump2d, 'bumpDepth', 'Bump Depth')
                 btn.mat_attrs['Bump Depth'] = f'{mat_bump2d}.bumpDepth'
 
     # 对材质属性面板的metallic和roughness属性赋值
@@ -426,29 +385,19 @@ class MaterialExplorer:
                 mat_metallic_strength_constant = None
                 mat_roughness_strength_constant = None
                 for multiply_divide in mat_multiply_divides:
-                    mat_float_constants = multiply_divide.inputs(
-                        type='floatConstant')
+                    mat_float_constants = multiply_divide.inputs(type='floatConstant')
                     if mat_float_constants:
-                        if mat_float_constants[0].name(
-                        ) == 'metallic_strength':
-                            mat_metallic_strength_constant = multiply_divide.inputs(
-                                type='floatConstant')[0]
-                        if mat_float_constants[0].name(
-                        ) == 'roughness_strength':
-                            mat_roughness_strength_constant = multiply_divide.inputs(
-                                type='floatConstant')[0]
+                        if mat_float_constants[0].name().startswith('metallic_strength'):
+                            mat_metallic_strength_constant = multiply_divide.inputs(type='floatConstant')[0]
+                        if mat_float_constants[0].name().startswith('roughness_strength'):
+                            mat_roughness_strength_constant = multiply_divide.inputs(type='floatConstant')[0]
 
                 if mat_metallic_strength_constant:
-                    self.set_float_slider_value(mat_metallic_strength_constant,
-                                                'inFloat', 'Metallic Strength')
-                    btn.mat_attrs[
-                        'Metallic Strength'] = f'{mat_metallic_strength_constant}.inFloat'
+                    self.set_float_slider_value(mat_metallic_strength_constant, 'inFloat', 'Metallic Strength')
+                    btn.mat_attrs['Metallic Strength'] = f'{mat_metallic_strength_constant}.inFloat'
                 if mat_roughness_strength_constant:
-                    self.set_float_slider_value(
-                        mat_roughness_strength_constant, 'inFloat',
-                        'Roughness Strength')
-                    btn.mat_attrs[
-                        'Roughness Strength'] = f'{mat_roughness_strength_constant}.inFloat'
+                    self.set_float_slider_value(mat_roughness_strength_constant, 'inFloat', 'Roughness Strength')
+                    btn.mat_attrs['Roughness Strength'] = f'{mat_roughness_strength_constant}.inFloat'
 
     # float slider赋值逻辑
     def set_float_slider_value(self, node, attr, slider_name):
