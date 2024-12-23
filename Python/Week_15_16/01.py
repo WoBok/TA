@@ -6,7 +6,7 @@
 
 # # Cmd: py D:\TA\Python\Week_15\01.py a 1 b 2
 # # LogPython: ab
-# #LogPython: 3
+# # LogPython: 3
 
 # ---------------------------------------------------
 
