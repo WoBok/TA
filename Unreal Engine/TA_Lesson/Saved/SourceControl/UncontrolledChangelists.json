@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"D:/TA/Unreal Engine/TA_Lesson/Content/StarterContent/Architecture/Floor_400x400.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/_GENERATED/WKCF/Box_8EAF4405.uasset"
+			]
+		}
+	]
+}
