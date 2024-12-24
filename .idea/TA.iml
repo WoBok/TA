@@ -3,7 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://C:/Program Files/Autodesk/Maya2023/devkit/other" />
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.11 (TA)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Maya Python 3.9" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
