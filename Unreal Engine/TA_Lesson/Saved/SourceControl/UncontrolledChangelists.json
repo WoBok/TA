@@ -5,13 +5,20 @@
 			"guid": "00000000000000000000000000000000",
 			"description": "Default Uncontrolled Changelist",
 			"files": [
+				"D:/TA/Unreal Engine/TA_Lesson/Content/StarterContent/Architecture/Floor_400x400.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/_GENERATED/WKCF/Box_8EAF4405.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/StarterContent/Maps/StarterMap.umap",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/EUB_10.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/S_SkeletalAssets.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/S_SkeletalAssets_.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/S_SkeletalAssetTable1.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/S_SkeletalAssetTable.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/S_SkeletalAssetTable2.uasset",
+				"D:/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/S_SkeletalAssetTable3.uasset",
 				"D:/WoBok/Learn/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/BP_Tag.uasset",
 				"D:/WoBok/Learn/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/BP_Tags_Multi_Comp.uasset",
 				"D:/WoBok/Learn/TA/Unreal Engine/TA_Lesson/Content/Week15-16/Blueprint/BP_Tags_Single_Comp.uasset",
-				"D:/WoBok/Learn/TA/Unreal Engine/TA_Lesson/Content/StarterContent/Maps/StarterMap.umap",
-				"D:/TA/Unreal Engine/TA_Lesson/Content/StarterContent/Architecture/Floor_400x400.uasset",
-				"D:/TA/Unreal Engine/TA_Lesson/Content/_GENERATED/WKCF/Box_8EAF4405.uasset",
-				"D:/TA/Unreal Engine/TA_Lesson/Content/StarterContent/Maps/StarterMap.umap"
+				"D:/WoBok/Learn/TA/Unreal Engine/TA_Lesson/Content/StarterContent/Maps/StarterMap.umap"
 			]
 		}
 	]

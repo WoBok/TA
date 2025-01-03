@@ -92,6 +92,7 @@ class MaterialExplorer:
             btn.parent.setBackgroundColor(Colors.DEFAULT_COLOR)
             btn.material_ui.delete()
             btn.is_selected = False
+
         self.selected_mod_btns.clear()
 
         self.selected_mat_btns.clear()
@@ -274,7 +275,6 @@ class MaterialExplorer:
             self.selected_mat_btns.remove(btn)  # 从材质按钮缓存中删除当前按钮
             btn.setBackgroundColor(Colors.MOD_BTN_SELECTED_COLOR)  # 取消按钮高亮
             btn.is_selected = False
-
         else:
             self.selected_mat_btns.append(btn)
             btn.setBackgroundColor(Colors.MAT_BTN_SELECTED_COLOR)  # 高亮按钮
