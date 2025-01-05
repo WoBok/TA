@@ -1,0 +1,80 @@
+{
+	"TabLabel": "Chameleon Async Example",
+	"InitTabSize": [700, 250],
+	"InitTabPosition": [800, 100],
+    "InitPyCmd": "import Example, importlib; importlib.reload(Example); chameleon_async_example = Example.AsyncTaskExample.AsyncTaskExample(%JsonPath); chameleon_async_example.some_slow_tasks()",
+	"MenuEntries": ["AsyncTaskExample"],
+	"Icon": {"style": "ChameleonStyle", "name": "Picture" },
+	"Root":{
+		"SBorder":
+		{
+			"BorderImage":
+			{
+				"Style": "FCoreStyle",
+				"Brush": "ToolPanel.GroupBorder"
+			},
+			"Content":{
+				"SVerticalBox":
+				{
+					"Slots": [
+						{
+							"HAlign": "Center",
+							"VAlign": "Bottom",
+							"STextBlock":
+							{
+								"Text": "None",
+                                "Aka": "TextBlock",
+								"TextStyle": {"Style": "FEditorStyle", "StyleName": "Credits.H3"},
+								"Justification": "Left"
+							}
+						},
+						{
+							"HAlign": "Center",
+							"SThrobber":
+							{
+                                "Aka": "Throbber",
+								"NumPieces": 5,
+								"Animate": "Horizontal",
+								"Visibility": "Collapsed"
+							}
+						},
+						{
+							"SHorizontalBox":
+							{
+							    "Slots": [
+							        {
+										"SButton": {
+											"Text": "Log function Cmd",
+											"OnClick": "chameleon_async_example.log_func_cmd()"
+										}
+							        },
+							        {
+							            "SButton": { 
+											"Text": "Func Types",
+											"OnClick": "chameleon_async_example.log_functions()"
+										}
+							        },
+									{
+										"SButton": {
+											"Text": "Dummy",
+											"OnClick": ""
+										}
+									}
+							    ]
+							}
+						},
+						{
+							"VAlign": "bottom",
+							"SEditableTextBox":
+							{
+							    "AutoWrapText": true,
+							    "IsReadOnly": true,
+							    "Text": "Some readonly text."
+							}
+						}
+					]
+				}
+			}
+		}
+	}
+}
