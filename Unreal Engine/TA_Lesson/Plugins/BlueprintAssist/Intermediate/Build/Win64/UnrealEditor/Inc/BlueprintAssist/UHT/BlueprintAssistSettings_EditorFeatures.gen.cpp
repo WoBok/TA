@@ -40,22 +40,34 @@ struct Z_Construct_UClass_UBASettings_EditorFeatures_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bSetReplicationFlagsAfterRenaming_MetaData[] = {
 		{ "Category", "CustomEventReplication" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Set the according replication flags after renaming a custom event by matching the prefixes below */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Set the according replication flags after renaming a custom event by matching the prefixes below" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bClearReplicationFlagsWhenRenamingWithNoPrefix_MetaData[] = {
 		{ "Category", "CustomEventReplication" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* When enabled, renaming a custom event with no matching prefix will apply \"NotReplicated\" */" },
+#endif
 		{ "EditCondition", "bSetReplicationFlagsAfterRenaming" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "When enabled, renaming a custom event with no matching prefix will apply \"NotReplicated\"" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAddReplicationPrefixToCustomEventTitle_MetaData[] = {
 		{ "Category", "CustomEventReplication" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Add the according prefix to the title after changing replication flags */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Add the according prefix to the title after changing replication flags" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MulticastPrefix_MetaData[] = {
 		{ "Category", "CustomEventReplication" },
@@ -71,121 +83,193 @@ struct Z_Construct_UClass_UBASettings_EditorFeatures_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDrawNodeGroupOutline_MetaData[] = {
 		{ "Category", "NodeGroup" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Draw an outline to visualise each node group on the graph */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Draw an outline to visualise each node group on the graph" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bOnlyDrawGroupOutlineWhenSelected_MetaData[] = {
 		{ "Category", "NodeGroup" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Only draw the group outline when selected */" },
+#endif
 		{ "EditCondition", "bDrawNodeGroupOutline" },
 		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Only draw the group outline when selected" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NodeGroupOutlineColor_MetaData[] = {
 		{ "Category", "NodeGroup" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Change the color of the border around the selected pin */" },
+#endif
 		{ "EditCondition", "bDrawNodeGroupOutline" },
 		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Change the color of the border around the selected pin" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NodeGroupOutlineWidth_MetaData[] = {
 		{ "Category", "NodeGroup" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Change the color of the border around the selected pin */" },
+#endif
 		{ "EditCondition", "bDrawNodeGroupOutline" },
 		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Change the color of the border around the selected pin" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NodeGroupOutlineMargin_MetaData[] = {
 		{ "Category", "NodeGroup" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Outline margin around each node */" },
+#endif
 		{ "EditCondition", "bDrawNodeGroupOutline" },
 		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Outline margin around each node" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDrawNodeGroupFill_MetaData[] = {
 		{ "Category", "NodeGroup" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Draw a fill to show the node groups for selected nodes */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Draw a fill to show the node groups for selected nodes" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NodeGroupFillColor_MetaData[] = {
 		{ "Category", "NodeGroup" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Change the color of the border around the selected pin */" },
+#endif
 		{ "EditCondition", "bDrawNodeGroupFill" },
 		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Change the color of the border around the selected pin" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_AdditionalDragNodesChords_MetaData[] = {
 		{ "Category", "Mouse Features" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Extra input chords to for dragging selected nodes with cursor (same as left-click-dragging) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Extra input chords to for dragging selected nodes with cursor (same as left-click-dragging)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_GroupMovementChords_MetaData[] = {
 		{ "Category", "Mouse Features" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Input chords for group dragging (move all linked nodes) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Input chords for group dragging (move all linked nodes)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_LeftSubTreeMovementChords_MetaData[] = {
 		{ "Category", "Mouse Features" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Input chords for group dragging (move left linked nodes) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Input chords for group dragging (move left linked nodes)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RightSubTreeMovementChords_MetaData[] = {
 		{ "Category", "Mouse Features" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Input chords for group dragging (move right linked nodes) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Input chords for group dragging (move right linked nodes)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InsertNewNodeKeyChord_MetaData[] = {
 		{ "Category", "General | New Node Behaviour" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Try to insert the node between any current wires when holding down this key */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Try to insert the node between any current wires when holding down this key" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAlwaysConnectExecutionFromParameter_MetaData[] = {
 		{ "Category", "General | New Node Behaviour" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* When creating a new node from a parameter pin, always try to connect the execution. Holding InsertNewNodeChord will disable this. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "When creating a new node from a parameter pin, always try to connect the execution. Holding InsertNewNodeChord will disable this." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAlwaysInsertFromParameter_MetaData[] = {
 		{ "Category", "General | New Node Behaviour" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* When creating a new node from a parameter pin, always try to insert between wires. Holding InsertNewNodeChord will disable this. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "When creating a new node from a parameter pin, always try to insert between wires. Holding InsertNewNodeChord will disable this." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAlwaysInsertFromExecution_MetaData[] = {
 		{ "Category", "General | New Node Behaviour" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* When creating a new node from an execution pin, always try to insert between wires. Holding InsertNewNodeChord will disable this. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "When creating a new node from an execution pin, always try to insert between wires. Holding InsertNewNodeChord will disable this." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CopyPinValueChord_MetaData[] = {
 		{ "Category", "Inputs" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Copy the pin value to the clipboard */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Copy the pin value to the clipboard" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PastePinValueChord_MetaData[] = {
 		{ "Category", "Inputs" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Paste the hovered value to the clipboard */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Paste the hovered value to the clipboard" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bSelectValuePinWhenCreatingNewNodes_MetaData[] = {
 		{ "Category", "Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Select the first editable parameter pin when a node is created */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_EditorFeatures.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Select the first editable parameter pin when a node is created" },
+#endif
 	};
 #endif // WITH_METADATA
 	static void NewProp_bSetReplicationFlagsAfterRenaming_SetBit(void* Obj);
@@ -369,14 +453,14 @@ UBASettings_EditorFeatures::~UBASettings_EditorFeatures() {}
 // End Class UBASettings_EditorFeatures
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_Statics
+struct Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UBASettings_EditorFeatures, UBASettings_EditorFeatures::StaticClass, TEXT("UBASettings_EditorFeatures"), &Z_Registration_Info_UClass_UBASettings_EditorFeatures, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBASettings_EditorFeatures), 285779491U) },
+		{ Z_Construct_UClass_UBASettings_EditorFeatures, UBASettings_EditorFeatures::StaticClass, TEXT("UBASettings_EditorFeatures"), &Z_Registration_Info_UClass_UBASettings_EditorFeatures, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBASettings_EditorFeatures), 2495159406U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_3873390955(TEXT("/Script/BlueprintAssist"),
-	Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_3617197156(TEXT("/Script/BlueprintAssist"),
+	Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_EditorFeatures_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

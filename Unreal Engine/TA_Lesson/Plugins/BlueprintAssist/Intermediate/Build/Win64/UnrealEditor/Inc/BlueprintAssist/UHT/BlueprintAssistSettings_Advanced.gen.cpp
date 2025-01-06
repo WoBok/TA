@@ -35,9 +35,13 @@ struct Z_Construct_UClass_UBASettings_Advanced_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bRemoveLoopingCausedBySwapping_MetaData[] = {
 		{ "Category", "Commands|Swap Nodes" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* If swapping produced any looping wires, remove them */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_Advanced.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "If swapping produced any looping wires, remove them" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DisabledCommands_MetaData[] = {
 		{ "Category", "Commands" },
@@ -45,40 +49,64 @@ struct Z_Construct_UClass_UBASettings_Advanced_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableMaterialGraphPinHoverFix_MetaData[] = {
 		{ "Category", "Material Graph|Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Potential issue where pins can get stuck in a hovered state on the material graph */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_Advanced.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Potential issue where pins can get stuck in a hovered state on the material graph" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bGenerateUniqueGUIDForMaterialExpressions_MetaData[] = {
 		{ "Category", "Material Graph|Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Fix for issue where copy-pasting material nodes will result in their material expressions having the same GUID */" },
+#endif
 		{ "DisplayName", "Generate Unique GUID For Material Expressions" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_Advanced.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Fix for issue where copy-pasting material nodes will result in their material expressions having the same GUID" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bStoreCacheDataInPackageMetaData_MetaData[] = {
 		{ "Category", "Cache|Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Instead of making a json file to store cache data, store it in the blueprint's package meta data */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_Advanced.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Instead of making a json file to store cache data, store it in the blueprint's package meta data" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bPrettyPrintCacheJSON_MetaData[] = {
 		{ "Category", "Cache" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Save cache file JSON in a more human-readable format. Useful for debugging, but increases size of cache files.  */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_Advanced.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Save cache file JSON in a more human-readable format. Useful for debugging, but increases size of cache files." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bUseCustomBlueprintActionMenu_MetaData[] = {
 		{ "Category", "Misc|Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Use a custom blueprint action menu for creating nodes (very prototype, not supported in 5.0 or earlier) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_Advanced.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Use a custom blueprint action menu for creating nodes (very prototype, not supported in 5.0 or earlier)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bForceRefreshGraphAfterFormatting_MetaData[] = {
 		{ "Category", "Misc|Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Hacky workaround to ensure that default comment nodes will be correctly resized after formatting */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings_Advanced.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Hacky workaround to ensure that default comment nodes will be correctly resized after formatting" },
+#endif
 	};
 #endif // WITH_METADATA
 	static void NewProp_bRemoveLoopingCausedBySwapping_SetBit(void* Obj);
@@ -190,14 +218,14 @@ UBASettings_Advanced::~UBASettings_Advanced() {}
 // End Class UBASettings_Advanced
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_Statics
+struct Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UBASettings_Advanced, UBASettings_Advanced::StaticClass, TEXT("UBASettings_Advanced"), &Z_Registration_Info_UClass_UBASettings_Advanced, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBASettings_Advanced), 318139626U) },
+		{ Z_Construct_UClass_UBASettings_Advanced, UBASettings_Advanced::StaticClass, TEXT("UBASettings_Advanced"), &Z_Registration_Info_UClass_UBASettings_Advanced, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBASettings_Advanced), 3664498485U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_3330257413(TEXT("/Script/BlueprintAssist"),
-	Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_1038123382(TEXT("/Script/BlueprintAssist"),
+	Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_Advanced_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

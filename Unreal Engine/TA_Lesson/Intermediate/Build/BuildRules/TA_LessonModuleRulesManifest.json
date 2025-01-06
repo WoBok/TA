@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\WoBok\\Learn\\TA\\Unreal Engine\\TA_Lesson\\Plugins\\BlueprintAssist\\Source\\BlueprintAssist\\BlueprintAssist.Build.cs",
+		"D:\\WoBok\\Learn\\TA\\Unreal Engine\\TA_Lesson\\Plugins\\ElectronNodes\\Source\\ElectronicNodes\\ElectronicNodes.Build.cs",
+		"D:\\WoBok\\Learn\\TA\\Unreal Engine\\TA_Lesson\\Plugins\\TAPython\\Source\\TAPython\\TAPython.Build.cs"
+	],
+	"EngineVersion": "5.5.1"
+}

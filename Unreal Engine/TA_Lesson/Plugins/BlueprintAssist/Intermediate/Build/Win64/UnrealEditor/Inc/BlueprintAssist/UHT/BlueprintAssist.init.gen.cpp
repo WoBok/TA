@@ -17,7 +17,7 @@ void EmptyLinkFunctionForGeneratedCodeBlueprintAssist_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000040,
-				0x223C56AE,
+				0x0904BF19,
 				0xB9DCF7EB,
 				METADATA_PARAMS(0, nullptr)
 			};
@@ -25,5 +25,5 @@ void EmptyLinkFunctionForGeneratedCodeBlueprintAssist_init() {}
 		}
 		return Z_Registration_Info_UPackage__Script_BlueprintAssist.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_BlueprintAssist(Z_Construct_UPackage__Script_BlueprintAssist, TEXT("/Script/BlueprintAssist"), Z_Registration_Info_UPackage__Script_BlueprintAssist, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x223C56AE, 0xB9DCF7EB));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_BlueprintAssist(Z_Construct_UPackage__Script_BlueprintAssist, TEXT("/Script/BlueprintAssist"), Z_Registration_Info_UPackage__Script_BlueprintAssist, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x0904BF19, 0xB9DCF7EB));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

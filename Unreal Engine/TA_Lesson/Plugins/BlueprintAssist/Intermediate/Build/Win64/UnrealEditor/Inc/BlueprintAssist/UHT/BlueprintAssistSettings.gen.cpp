@@ -607,15 +607,23 @@ struct Z_Construct_UScriptStruct_FBAKnotTrackSettings_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_KnotXOffset_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Knot nodes x-offset for regular execution wires */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Knot nodes x-offset for regular execution wires" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_LoopingOffset_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Knot node offset for wires that flow backwards in execution */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Knot node offset for wires that flow backwards in execution" },
+#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FIntPropertyParams NewProp_KnotXOffset;
@@ -679,51 +687,79 @@ struct Z_Construct_UScriptStruct_FBAFormatterSettings_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnabled_MetaData[] = {
 		{ "Category", "FormatterSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Setting to enable / disable all behaviour for this graph type */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Setting to enable / disable all behaviour for this graph type" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FormatterType_MetaData[] = {
 		{ "Category", "FormatterSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Formatter to use */" },
+#endif
 		{ "EditCondition", "bEnabled" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Formatter to use" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Padding_MetaData[] = {
 		{ "Category", "FormatterSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Padding used when formatting nodes */" },
+#endif
 		{ "EditCondition", "bEnabled" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Padding used when formatting nodes" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_AutoFormatting_MetaData[] = {
 		{ "Category", "FormatterSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Auto formatting method to be used for this graph */" },
+#endif
 		{ "EditCondition", "bEnabled" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Auto formatting method to be used for this graph" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FormatterDirection_MetaData[] = {
 		{ "Category", "FormatterSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Direction of execution flow in this graph */" },
+#endif
 		{ "EditCondition", "bEnabled" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Direction of execution flow in this graph" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RootNodes_MetaData[] = {
 		{ "Category", "FormatterSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Names of any root nodes that this graph uses */" },
+#endif
 		{ "EditCondition", "bEnabled" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Names of any root nodes that this graph uses" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ExecPinName_MetaData[] = {
 		{ "Category", "FormatterSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Name of the execution pin for this graph type */" },
+#endif
 		{ "EditCondition", "bEnabled" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Name of the execution pin for this graph type" },
+#endif
 	};
 #endif // WITH_METADATA
 	static void NewProp_bEnabled_SetBit(void* Obj);
@@ -813,58 +849,94 @@ struct Z_Construct_UClass_UBASettings_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAddToolbarWidget_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Add the BlueprintAssist widget to the toolbar */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Add the BlueprintAssist widget to the toolbar" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SelectedPinHighlightColor_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Change the color of the border around the selected pin */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Change the color of the border around the selected pin" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableGlobalCommentBubblePinned_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Sets the 'Comment Bubble Pinned' bool for all nodes on the graph (Auto Size Comment plugin handles this value for comments) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Sets the 'Comment Bubble Pinned' bool for all nodes on the graph (Auto Size Comment plugin handles this value for comments)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bGlobalCommentBubblePinnedValue_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* The global 'Comment Bubble Pinned' value */" },
+#endif
 		{ "EditCondition", "bEnableGlobalCommentBubblePinned" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "The global 'Comment Bubble Pinned' value" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAutoAddParentNode_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Automatically add parent nodes to event nodes */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Automatically add parent nodes to event nodes" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAutoRenameGettersAndSetters_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Automatically rename Function getters and setters when the Function is renamed */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Automatically rename Function getters and setters when the Function is renamed" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bMergeGenerateGetterAndSetterButton_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Merge the generate getter and setter into one button */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Merge the generate getter and setter into one button" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ShiftCameraDistance_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Distance the viewport moves when running the Shift Camera command. Scaled by zoom distance. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Distance the viewport moves when running the Shift Camera command. Scaled by zoom distance." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bSlowButAccurateSizeCaching_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Enable more slower but more accurate node size caching */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enable more slower but more accurate node size caching" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CacheSaveLocation_MetaData[] = {
 		{ "Category", "General" },
@@ -872,157 +944,257 @@ struct Z_Construct_UClass_UBASettings_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bSaveBlueprintAssistCacheToFile_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Save the node size cache to a file (located in the the plugin folder) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Save the node size cache to a file (located in the the plugin folder)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_AutoZoomToNodeBehavior_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines if we should auto zoom to a newly created node */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines if we should auto zoom to a newly created node" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SupportedAssetEditors_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Supported asset editors by name */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Supported asset editors by name" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SupportedGraphEditors_MetaData[] = {
 		{ "Category", "General" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Supported graph editors by name */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Supported graph editors by name" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bGloballyDisableAutoFormatting_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Enabling this is the same as setting auto formatting to Never for all graphs */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enabling this is the same as setting auto formatting to Never for all graphs" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FormattingStyle_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines how execution nodes are positioned */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines how execution nodes are positioned" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ParameterStyle_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines how parameters are positioned */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines how parameters are positioned" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ExecutionWiringStyle_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines how execution wires are created */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines how execution wires are created" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ParameterWiringStyle_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines how parameter wires are created */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines how parameter wires are created" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bUseKnotNodePool_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Reuse knot nodes instead of creating new ones every time */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Reuse knot nodes instead of creating new ones every time" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDisableHelixingWithMultiplePins_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Should helixing be disabled if there are multiple linked pins */" },
+#endif
 		{ "InlineEditConditionToggle", "" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Should helixing be disabled if there are multiple linked pins" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DisableHelixingPinCount_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Disable helixing if the number of linked parameter pins is >= than this number */" },
+#endif
 		{ "EditCondition", "bDisableHelixingWithMultiplePins" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Disable helixing if the number of linked parameter pins is >= than this number" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bLimitHelixingHeight_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Whether to use HelixingHeightMax and SingleNodeMaxHeight */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Whether to use HelixingHeightMax and SingleNodeMaxHeight" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_HelixingHeightMax_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Helixing is disabled if the total height of the parameter nodes is larger than this value */" },
+#endif
 		{ "EditCondition", "bLimitHelixingHeight" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Helixing is disabled if the total height of the parameter nodes is larger than this value" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SingleNodeMaxHeight_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Helixing is disabled if a single node is taller than this value */" },
+#endif
 		{ "EditCondition", "bLimitHelixingHeight" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Helixing is disabled if a single node is taller than this value" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDetectNewNodesAndCacheNodeSizes_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Cache node sizes of any newly detected nodes. Checks upon opening a blueprint or when a new node is added to the graph. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Cache node sizes of any newly detected nodes. Checks upon opening a blueprint or when a new node is added to the graph." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bRefreshNodeSizeBeforeFormatting_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Refresh node sizes before formatting */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Refresh node sizes before formatting" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bCreateKnotNodes_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Create knot nodes */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Create knot nodes" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bExpandNodesAheadOfParameters_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Add spacing to nodes so they are always in front of their input parameters */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Add spacing to nodes so they are always in front of their input parameters" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bExpandNodesByHeight_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Add spacing to nodes which have many connections, fixing hard to read wires */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Add spacing to nodes which have many connections, fixing hard to read wires" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bExpandParametersByHeight_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Add spacing to parameter nodes which have many connections, fixing hard to read wires */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Add spacing to parameter nodes which have many connections, fixing hard to read wires" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bSnapToGrid_MetaData[] = {
 		{ "Category", "FormattingOptions" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Snap nodes to grid (in the x-axis) after formatting */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Snap nodes to grid (in the x-axis) after formatting" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FormatAllStyle_MetaData[] = {
 		{ "Category", "FormatAll" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines how nodes are positioned into columns when running formatting all nodes */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines how nodes are positioned into columns when running formatting all nodes" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FormatAllHorizontalAlignment_MetaData[] = {
 		{ "Category", "FormatAll" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines how nodes are aligned horizontally */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines how nodes are aligned horizontally" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FormatAllPadding_MetaData[] = {
 		{ "Category", "FormatAll" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* x values defines padding between columns, y value defines horizontal padding between node trees */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "x values defines padding between columns, y value defines horizontal padding between node trees" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bUseFormatAllPaddingInComment_MetaData[] = {
 		{ "Category", "FormatAll" },
@@ -1031,145 +1203,237 @@ struct Z_Construct_UClass_UBASettings_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FormatAllPaddingInComment_MetaData[] = {
 		{ "Category", "FormatAll" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Determines the vertical spacing for the Format All command when event nodes are in the same comment */" },
+#endif
 		{ "EditCondition", "bUseFormatAllPaddingInComment" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Determines the vertical spacing for the Format All command when event nodes are in the same comment" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAutoPositionEventNodes_MetaData[] = {
 		{ "Category", "FormatAll" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Call the format all function when a new event node is added to the graph */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Call the format all function when a new event node is added to the graph" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAlwaysFormatAll_MetaData[] = {
 		{ "Category", "FormatAll" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Call the format all function when ANY new node is added to the graph. Useful for when the 'UseColumnsForFormatAll' setting is on. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Call the format all function when ANY new node is added to the graph. Useful for when the 'UseColumnsForFormatAll' setting is on." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BlueprintFormatterSettings_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "////////////////////////////////////////////////////////////\n// Blueprint formatting\n////////////////////////////////////////////////////////////\n" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Blueprint formatting" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BlueprintParameterPadding_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Padding used between parameter nodes */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Padding used between parameter nodes" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BlueprintExecutionKnotSettings_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Offsets for execution knot tracks */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Offsets for execution knot tracks" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BlueprintParameterKnotSettings_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Offsets for parameter knot tracks */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Offsets for parameter knot tracks" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_UseBlueprintFormattingForTheseGraphs_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Blueprint formatting will be used for these types of graphs (you can see the type of a graph with the PrintGraphInfo command, default: unbound) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Blueprint formatting will be used for these types of graphs (you can see the type of a graph with the PrintGraphInfo command, default: unbound)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bTreatDelegatesAsExecutionPins_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* When formatting treat delegate pins as execution pins, recommended to turn this option off and use the 'CreateEvent' node */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "When formatting treat delegate pins as execution pins, recommended to turn this option off and use the 'CreateEvent' node" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bCenterBranches_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Center node execution branches (Default: center nodes with 3 or more branches) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Center node execution branches (Default: center nodes with 3 or more branches)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NumRequiredBranches_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Only center branches if we have this (or more) number of branches */" },
+#endif
 		{ "EditCondition", "bCenterBranches" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Only center branches if we have this (or more) number of branches" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bCenterBranchesForParameters_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Center parameters nodes with multiple links */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Center parameters nodes with multiple links" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NumRequiredBranchesForParameters_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Only center parameters which have this many (or more) number of links */" },
+#endif
 		{ "EditCondition", "bCenterBranchesForParameters" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Only center parameters which have this many (or more) number of links" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_VerticalPinSpacing_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Vertical spacing from the last linked pin */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Vertical spacing from the last linked pin" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ParameterVerticalPinSpacing_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Vertical spacing from the last linked pin for parameters */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Vertical spacing from the last linked pin for parameters" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BlueprintKnotTrackSpacing_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Spacing used between wire tracks */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Spacing used between wire tracks" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CullKnotVerticalThreshold_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* If the knot's vertical dist to the linked pin is less than this value, it won't be created */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "If the knot's vertical dist to the linked pin is less than this value, it won't be created" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_KnotNodeDistanceThreshold_MetaData[] = {
 		{ "Category", "BlueprintFormatting" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* The width between pins required for a knot node to be created */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "The width between pins required for a knot node to be created" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NonBlueprintFormatterSettings_MetaData[] = {
 		{ "Category", "OtherGraphs" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "////////////////////////////////////////////////////////////\n// Other Graphs\n////////////////////////////////////////////////////////////\n" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Other Graphs" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bApplyCommentPadding_MetaData[] = {
 		{ "Category", "CommentSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Apply comment padding when formatting */" },
+#endif
 		{ "DevelopmentStatus", "Experimental" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Apply comment padding when formatting" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAddKnotNodesToComments_MetaData[] = {
 		{ "Category", "CommentSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Add knot nodes to comments after formatting */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Add knot nodes to comments after formatting" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CommentNodePadding_MetaData[] = {
 		{ "Category", "CommentSettings" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Padding around the comment box. Make sure this is the same as in the AutoSizeComments setting */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Padding around the comment box. Make sure this is the same as in the AutoSizeComments setting" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableVariableDefaults_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Enable Variable defaults */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enable Variable defaults" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bApplyVariableDefaultsToEventDispatchers_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
@@ -1177,200 +1441,320 @@ struct Z_Construct_UClass_UBASettings_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultVariableInstanceEditable_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default Instance Editable */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default Instance Editable" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultVariableBlueprintReadOnly_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default Blueprint Read Only */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default Blueprint Read Only" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultVariableExposeOnSpawn_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default Expose on Spawn */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default Expose on Spawn" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultVariablePrivate_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default Private */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default Private" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultVariableExposeToCinematics_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default Expose to Cinematics */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default Expose to Cinematics" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultVariableName_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default name */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default name" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultVariableTooltip_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default Tooltip */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default Tooltip" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultVariableCategory_MetaData[] = {
 		{ "Category", "NewVariableDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Variable default Category */" },
+#endif
 		{ "EditCondition", "bEnableVariableDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Variable default Category" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableFunctionDefaults_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Enable Function defaults */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enable Function defaults" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultFunctionAccessSpecifier_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Function default AccessSpecifier */" },
+#endif
 		{ "EditCondition", "bEnableFunctionDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Function default AccessSpecifier" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultFunctionPure_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Function default Pure */" },
+#endif
 		{ "EditCondition", "bEnableFunctionDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Function default Pure" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultFunctionConst_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Function default Const */" },
+#endif
 		{ "EditCondition", "bEnableFunctionDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Function default Const" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDefaultFunctionExec_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Function default Exec */" },
+#endif
 		{ "EditCondition", "bEnableFunctionDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Function default Exec" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultFunctionTooltip_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Function default Tooltip */" },
+#endif
 		{ "EditCondition", "bEnableFunctionDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Function default Tooltip" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultFunctionKeywords_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Function default Keywords */" },
+#endif
 		{ "EditCondition", "bEnableFunctionDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Function default Keywords" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultFunctionCategory_MetaData[] = {
 		{ "Category", "NewFunctionDefaults" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Function default Category */" },
+#endif
 		{ "EditCondition", "bEnableFunctionDefaults" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Function default Category" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDisableBlueprintAssistPlugin_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Disable the plugin (requires restarting engine) */" },
+#endif
 		{ "ConfigRestartRequired", "true" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Disable the plugin (requires restarting engine)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultGeneratedGettersCategory_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* What category to assign to generated getter functions. Overrides DefaultFunctionCategory. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "What category to assign to generated getter functions. Overrides DefaultFunctionCategory." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultGeneratedSettersCategory_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* What category to assign to generated setter functions. Overrides DefaultFunctionCategory. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "What category to assign to generated setter functions. Overrides DefaultFunctionCategory." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableDoubleClickGoToDefinition_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Double click on a node to go to definition. Currently only implemented for Cast blueprint node. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Double click on a node to go to definition. Currently only implemented for Cast blueprint node." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableInvisibleKnotNodes_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Enable invisible knot nodes (re-open any open graphs) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enable invisible knot nodes (re-open any open graphs)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bPlayLiveCompileSound_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Play compile sound on *successful* live compile (may need to restart editor) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Play compile sound on *successful* live compile (may need to restart editor)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FolderBookmarks_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Input for folder bookmarks */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Input for folder bookmarks" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ClickTime_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Duration to differentiate between a click and a drag */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Duration to differentiate between a click and a drag" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bHighlightBadComments_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Draw a red border around bad comment nodes after formatting */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Draw a red border around bad comment nodes after formatting" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BlueprintAssistDebug_MetaData[] = {
 		{ "Category", "Misc" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/** Ignore this (setting for custom debugging) */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Ignore this (setting for custom debugging)" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bShowOverlayWhenCachingNodes_MetaData[] = {
 		{ "Category", "Accessibility" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/**\n\x09 * When caching nodes, the viewport will jump to each node and this can cause discomfort for photosensitive users.\n\x09 * This setting displays an overlay to prevent this.\n\x09 */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "When caching nodes, the viewport will jump to each node and this can cause discomfort for photosensitive users.\nThis setting displays an overlay to prevent this." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RequiredNodesToShowOverlayProgressBar_MetaData[] = {
 		{ "Category", "Accessibility" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Number of pending caching nodes required to show the progress bar in the center of the overlay */" },
+#endif
 		{ "EditCondition", "bShowOverlayWhenCachingNodes" },
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Number of pending caching nodes required to show the progress bar in the center of the overlay" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableFasterFormatting_MetaData[] = {
 		{ "Category", "Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Faster formatting will only format chains of nodes have been moved or had connections changed. Greatly increases speed of the format all command. */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Faster formatting will only format chains of nodes have been moved or had connections changed. Greatly increases speed of the format all command." },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAlignExecNodesTo8x8Grid_MetaData[] = {
 		{ "Category", "Experimental" },
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "/* Align execution nodes to the 8x8 grid when formatting */" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistSettings.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Align execution nodes to the 8x8 grid when formatting" },
+#endif
 	};
 #endif // WITH_METADATA
 	static void NewProp_bAddToolbarWidget_SetBit(void* Obj);
@@ -1669,10 +2053,10 @@ void Z_Construct_UClass_UBASettings_Statics::NewProp_bAlwaysFormatAll_SetBit(voi
 	((UBASettings*)Obj)->bAlwaysFormatAll = 1;
 }
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_bAlwaysFormatAll = { "bAlwaysFormatAll", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(UBASettings), &Z_Construct_UClass_UBASettings_Statics::NewProp_bAlwaysFormatAll_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bAlwaysFormatAll_MetaData), NewProp_bAlwaysFormatAll_MetaData) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintFormatterSettings = { "BlueprintFormatterSettings", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintFormatterSettings), Z_Construct_UScriptStruct_FBAFormatterSettings, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintFormatterSettings_MetaData), NewProp_BlueprintFormatterSettings_MetaData) }; // 288424414
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintFormatterSettings = { "BlueprintFormatterSettings", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintFormatterSettings), Z_Construct_UScriptStruct_FBAFormatterSettings, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintFormatterSettings_MetaData), NewProp_BlueprintFormatterSettings_MetaData) }; // 2232114228
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintParameterPadding = { "BlueprintParameterPadding", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintParameterPadding), Z_Construct_UScriptStruct_FIntPoint, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintParameterPadding_MetaData), NewProp_BlueprintParameterPadding_MetaData) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintExecutionKnotSettings = { "BlueprintExecutionKnotSettings", nullptr, (EPropertyFlags)0x0010040000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintExecutionKnotSettings), Z_Construct_UScriptStruct_FBAKnotTrackSettings, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintExecutionKnotSettings_MetaData), NewProp_BlueprintExecutionKnotSettings_MetaData) }; // 2625077942
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintParameterKnotSettings = { "BlueprintParameterKnotSettings", nullptr, (EPropertyFlags)0x0010040000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintParameterKnotSettings), Z_Construct_UScriptStruct_FBAKnotTrackSettings, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintParameterKnotSettings_MetaData), NewProp_BlueprintParameterKnotSettings_MetaData) }; // 2625077942
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintExecutionKnotSettings = { "BlueprintExecutionKnotSettings", nullptr, (EPropertyFlags)0x0010040000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintExecutionKnotSettings), Z_Construct_UScriptStruct_FBAKnotTrackSettings, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintExecutionKnotSettings_MetaData), NewProp_BlueprintExecutionKnotSettings_MetaData) }; // 3149525452
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintParameterKnotSettings = { "BlueprintParameterKnotSettings", nullptr, (EPropertyFlags)0x0010040000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintParameterKnotSettings), Z_Construct_UScriptStruct_FBAKnotTrackSettings, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintParameterKnotSettings_MetaData), NewProp_BlueprintParameterKnotSettings_MetaData) }; // 3149525452
 const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_UseBlueprintFormattingForTheseGraphs_Inner = { "UseBlueprintFormattingForTheseGraphs", nullptr, (EPropertyFlags)0x0000000000004000, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_UseBlueprintFormattingForTheseGraphs = { "UseBlueprintFormattingForTheseGraphs", nullptr, (EPropertyFlags)0x0010040000004001, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, UseBlueprintFormattingForTheseGraphs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_UseBlueprintFormattingForTheseGraphs_MetaData), NewProp_UseBlueprintFormattingForTheseGraphs_MetaData) };
 void Z_Construct_UClass_UBASettings_Statics::NewProp_bTreatDelegatesAsExecutionPins_SetBit(void* Obj)
@@ -1697,9 +2081,9 @@ const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UBASettings_Stati
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_BlueprintKnotTrackSpacing = { "BlueprintKnotTrackSpacing", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, BlueprintKnotTrackSpacing), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BlueprintKnotTrackSpacing_MetaData), NewProp_BlueprintKnotTrackSpacing_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_CullKnotVerticalThreshold = { "CullKnotVerticalThreshold", nullptr, (EPropertyFlags)0x0010040000004001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, CullKnotVerticalThreshold), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CullKnotVerticalThreshold_MetaData), NewProp_CullKnotVerticalThreshold_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_KnotNodeDistanceThreshold = { "KnotNodeDistanceThreshold", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, KnotNodeDistanceThreshold), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_KnotNodeDistanceThreshold_MetaData), NewProp_KnotNodeDistanceThreshold_MetaData) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_NonBlueprintFormatterSettings_ValueProp = { "NonBlueprintFormatterSettings", nullptr, (EPropertyFlags)0x0000000000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBAFormatterSettings, METADATA_PARAMS(0, nullptr) }; // 288424414
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_NonBlueprintFormatterSettings_ValueProp = { "NonBlueprintFormatterSettings", nullptr, (EPropertyFlags)0x0000000000004001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBAFormatterSettings, METADATA_PARAMS(0, nullptr) }; // 2232114228
 const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_NonBlueprintFormatterSettings_Key_KeyProp = { "NonBlueprintFormatterSettings_Key", nullptr, (EPropertyFlags)0x0000000000004001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FMapPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_NonBlueprintFormatterSettings = { "NonBlueprintFormatterSettings", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, NonBlueprintFormatterSettings), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NonBlueprintFormatterSettings_MetaData), NewProp_NonBlueprintFormatterSettings_MetaData) }; // 288424414
+const UECodeGen_Private::FMapPropertyParams Z_Construct_UClass_UBASettings_Statics::NewProp_NonBlueprintFormatterSettings = { "NonBlueprintFormatterSettings", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBASettings, NonBlueprintFormatterSettings), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NonBlueprintFormatterSettings_MetaData), NewProp_NonBlueprintFormatterSettings_MetaData) }; // 2232114228
 void Z_Construct_UClass_UBASettings_Statics::NewProp_bApplyCommentPadding_SetBit(void* Obj)
 {
 	((UBASettings*)Obj)->bApplyCommentPadding = 1;
@@ -1968,7 +2352,7 @@ UBASettings::~UBASettings() {}
 // End Class UBASettings
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics
+struct Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
 		{ EBACacheSaveLocation_StaticEnum, TEXT("EBACacheSaveLocation"), &Z_Registration_Info_UEnum_EBACacheSaveLocation, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2803918057U) },
@@ -1983,16 +2367,16 @@ struct Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTe
 		{ EBAFunctionAccessSpecifier_StaticEnum, TEXT("EBAFunctionAccessSpecifier"), &Z_Registration_Info_UEnum_EBAFunctionAccessSpecifier, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1243834231U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FBAKnotTrackSettings::StaticStruct, Z_Construct_UScriptStruct_FBAKnotTrackSettings_Statics::NewStructOps, TEXT("BAKnotTrackSettings"), &Z_Registration_Info_UScriptStruct_BAKnotTrackSettings, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAKnotTrackSettings), 2625077942U) },
-		{ FBAFormatterSettings::StaticStruct, Z_Construct_UScriptStruct_FBAFormatterSettings_Statics::NewStructOps, TEXT("BAFormatterSettings"), &Z_Registration_Info_UScriptStruct_BAFormatterSettings, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAFormatterSettings), 288424414U) },
+		{ FBAKnotTrackSettings::StaticStruct, Z_Construct_UScriptStruct_FBAKnotTrackSettings_Statics::NewStructOps, TEXT("BAKnotTrackSettings"), &Z_Registration_Info_UScriptStruct_BAKnotTrackSettings, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAKnotTrackSettings), 3149525452U) },
+		{ FBAFormatterSettings::StaticStruct, Z_Construct_UScriptStruct_FBAFormatterSettings_Statics::NewStructOps, TEXT("BAFormatterSettings"), &Z_Registration_Info_UScriptStruct_BAFormatterSettings, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAFormatterSettings), 2232114228U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UBASettings, UBASettings::StaticClass, TEXT("UBASettings"), &Z_Registration_Info_UClass_UBASettings, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBASettings), 1031712229U) },
+		{ Z_Construct_UClass_UBASettings, UBASettings::StaticClass, TEXT("UBASettings"), &Z_Registration_Info_UClass_UBASettings, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBASettings), 1255852170U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_1605012663(TEXT("/Script/BlueprintAssist"),
-	Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ClassInfo),
-	Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ScriptStructInfo),
-	Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::EnumInfo));
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_1561520032(TEXT("/Script/BlueprintAssist"),
+	Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ClassInfo),
+	Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistSettings_h_Statics::EnumInfo));
 // End Registration
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

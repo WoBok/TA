@@ -43,17 +43,25 @@ struct Z_Construct_UScriptStruct_FBANodeData_Statics
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BSize_MetaData[] = {
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "// node size\n" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "node size" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CachedPins_MetaData[] = {
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bLocked_MetaData[] = {
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "// pin guid -> pin offset\n" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "pin guid -> pin offset" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NodeGroup_MetaData[] = {
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
@@ -161,9 +169,9 @@ struct Z_Construct_UScriptStruct_FBAGraphData_Statics
 	}
 	static const UECodeGen_Private::FStructParams StructParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBAGraphData_Statics::NewProp_NodeData_ValueProp = { "NodeData", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBANodeData, METADATA_PARAMS(0, nullptr) }; // 754067594
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBAGraphData_Statics::NewProp_NodeData_ValueProp = { "NodeData", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBANodeData, METADATA_PARAMS(0, nullptr) }; // 2999667162
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBAGraphData_Statics::NewProp_NodeData_Key_KeyProp = { "NodeData_Key", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FGuid, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FMapPropertyParams Z_Construct_UScriptStruct_FBAGraphData_Statics::NewProp_NodeData = { "NodeData", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBAGraphData, NodeData), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NodeData_MetaData), NewProp_NodeData_MetaData) }; // 754067594
+const UECodeGen_Private::FMapPropertyParams Z_Construct_UScriptStruct_FBAGraphData_Statics::NewProp_NodeData = { "NodeData", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBAGraphData, NodeData), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NodeData_MetaData), NewProp_NodeData_MetaData) }; // 2999667162
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FBAGraphData_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FBAGraphData_Statics::NewProp_NodeData_ValueProp,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FBAGraphData_Statics::NewProp_NodeData_Key_KeyProp,
@@ -227,9 +235,9 @@ struct Z_Construct_UScriptStruct_FBAPackageData_Statics
 	}
 	static const UECodeGen_Private::FStructParams StructParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBAPackageData_Statics::NewProp_GraphData_ValueProp = { "GraphData", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBAGraphData, METADATA_PARAMS(0, nullptr) }; // 292349589
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBAPackageData_Statics::NewProp_GraphData_ValueProp = { "GraphData", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBAGraphData, METADATA_PARAMS(0, nullptr) }; // 4106126377
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBAPackageData_Statics::NewProp_GraphData_Key_KeyProp = { "GraphData_Key", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FGuid, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FMapPropertyParams Z_Construct_UScriptStruct_FBAPackageData_Statics::NewProp_GraphData = { "GraphData", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBAPackageData, GraphData), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_GraphData_MetaData), NewProp_GraphData_MetaData) }; // 292349589
+const UECodeGen_Private::FMapPropertyParams Z_Construct_UScriptStruct_FBAPackageData_Statics::NewProp_GraphData = { "GraphData", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBAPackageData, GraphData), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_GraphData_MetaData), NewProp_GraphData_MetaData) }; // 4106126377
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FBAPackageData_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FBAPackageData_Statics::NewProp_GraphData_ValueProp,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FBAPackageData_Statics::NewProp_GraphData_Key_KeyProp,
@@ -283,9 +291,13 @@ struct Z_Construct_UScriptStruct_FBACacheData_Statics
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BookmarkedFolders_MetaData[] = {
+#if !UE_BUILD_SHIPPING
 		{ "Comment", "// package name -> package data\n" },
+#endif
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
+#if !UE_BUILD_SHIPPING
 		{ "ToolTip", "package name -> package data" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CacheVersion_MetaData[] = {
 		{ "ModuleRelativePath", "Public/BlueprintAssistCache.h" },
@@ -304,9 +316,9 @@ struct Z_Construct_UScriptStruct_FBACacheData_Statics
 	}
 	static const UECodeGen_Private::FStructParams StructParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_PackageData_ValueProp = { "PackageData", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBAPackageData, METADATA_PARAMS(0, nullptr) }; // 3842023019
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_PackageData_ValueProp = { "PackageData", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FBAPackageData, METADATA_PARAMS(0, nullptr) }; // 2913650069
 const UECodeGen_Private::FNamePropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_PackageData_Key_KeyProp = { "PackageData_Key", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FMapPropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_PackageData = { "PackageData", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBACacheData, PackageData), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PackageData_MetaData), NewProp_PackageData_MetaData) }; // 3842023019
+const UECodeGen_Private::FMapPropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_PackageData = { "PackageData", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBACacheData, PackageData), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PackageData_MetaData), NewProp_PackageData_MetaData) }; // 2913650069
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_BookmarkedFolders_Inner = { "BookmarkedFolders", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_BookmarkedFolders = { "BookmarkedFolders", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBACacheData, BookmarkedFolders), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BookmarkedFolders_MetaData), NewProp_BookmarkedFolders_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FBACacheData_Statics::NewProp_CacheVersion = { "CacheVersion", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FBACacheData, CacheVersion), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CacheVersion_MetaData), NewProp_CacheVersion_MetaData) };
@@ -343,18 +355,18 @@ UScriptStruct* Z_Construct_UScriptStruct_FBACacheData()
 // End ScriptStruct FBACacheData
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_Statics
+struct Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_Statics
 {
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FBANodeData::StaticStruct, Z_Construct_UScriptStruct_FBANodeData_Statics::NewStructOps, TEXT("BANodeData"), &Z_Registration_Info_UScriptStruct_BANodeData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBANodeData), 754067594U) },
-		{ FBAGraphData::StaticStruct, Z_Construct_UScriptStruct_FBAGraphData_Statics::NewStructOps, TEXT("BAGraphData"), &Z_Registration_Info_UScriptStruct_BAGraphData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAGraphData), 292349589U) },
-		{ FBAPackageData::StaticStruct, Z_Construct_UScriptStruct_FBAPackageData_Statics::NewStructOps, TEXT("BAPackageData"), &Z_Registration_Info_UScriptStruct_BAPackageData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAPackageData), 3842023019U) },
-		{ FBACacheData::StaticStruct, Z_Construct_UScriptStruct_FBACacheData_Statics::NewStructOps, TEXT("BACacheData"), &Z_Registration_Info_UScriptStruct_BACacheData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBACacheData), 3695615368U) },
+		{ FBANodeData::StaticStruct, Z_Construct_UScriptStruct_FBANodeData_Statics::NewStructOps, TEXT("BANodeData"), &Z_Registration_Info_UScriptStruct_BANodeData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBANodeData), 2999667162U) },
+		{ FBAGraphData::StaticStruct, Z_Construct_UScriptStruct_FBAGraphData_Statics::NewStructOps, TEXT("BAGraphData"), &Z_Registration_Info_UScriptStruct_BAGraphData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAGraphData), 4106126377U) },
+		{ FBAPackageData::StaticStruct, Z_Construct_UScriptStruct_FBAPackageData_Statics::NewStructOps, TEXT("BAPackageData"), &Z_Registration_Info_UScriptStruct_BAPackageData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBAPackageData), 2913650069U) },
+		{ FBACacheData::StaticStruct, Z_Construct_UScriptStruct_FBACacheData_Statics::NewStructOps, TEXT("BACacheData"), &Z_Registration_Info_UScriptStruct_BACacheData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBACacheData), 3755351434U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_1483288667(TEXT("/Script/BlueprintAssist"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_1470108690(TEXT("/Script/BlueprintAssist"),
 	nullptr, 0,
-	Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_build_U5M_Marketplace_Sync_LocalBuilds_PluginTemp_HostProject_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_TA_Lesson_Plugins_BlueprintAssist_Source_BlueprintAssist_Public_BlueprintAssistCache_h_Statics::ScriptStructInfo),
 	nullptr, 0);
 // End Registration
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
