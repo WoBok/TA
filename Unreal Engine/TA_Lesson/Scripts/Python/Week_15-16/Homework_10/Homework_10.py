@@ -36,8 +36,8 @@ def create_data_table(struct_asset):
     datatable_asset = asset_tools.create_asset(asset_name=asset_name, package_path=os.path.dirname(package_name),
                                                asset_class=unreal.DataTable, factory=datatable_factory)
 
-    unreal.log("The created Data Table has been stored at the path '/Content/Data'.")
-
+    unreal.SystemLibrary.print_string(None, "The created Data Table has been stored at the path '/Content/Data'.", True,
+                                      True, [0, 1, 0, 1], 5)
     # EditorAssetLibrary.sync_browser_to_objects(asset_paths=['/Game/Data/SkeletalAssetTable'])
     # Unreal Engine 5.5中存在的两个问题：（Unreal Engine 5.3测试无此问题）
     # 1. 如果文件夹之前没有创建，则无法显示文件
