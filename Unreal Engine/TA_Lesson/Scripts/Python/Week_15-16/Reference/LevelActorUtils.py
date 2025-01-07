@@ -231,6 +231,31 @@ def destroy_actor_by_label(label):
     return actors
 
 
+get_bp_class_by_path = lambda bp_path: unreal.EditorAssetLibrary.load_blueprint_class(bp_path)
+
+
+def get_bp_actors_by_path(bp_path):
+    bp_class = get_bp_class_by_path(bp_path)
+    unreal.log((bp_class.get_name(), bp_class))
+    return get_actors_by_class(bp_class)
+
+
+def example_get_bp_actors_by_path():
+    actors = get_bp_actors_by_path('/Game/LevelPrototyping/BP_ColorPrimitive_Pyramid.BP_ColorPrimitive_Pyramid')
+    for actor in actors:
+        unreal.log((actor.get_actor_label(), actor))
+
+
+def spawn_bp_actor_from_bp_asset(bp_path, actor_label=''):
+    bp_class = get_bp_class_by_path(bp_path)
+    bp_actor = spawn_actor_from_class(bp_class, actor_label)
+    return bp_actor
+
+
+def example_spawn_actor_from_bp_class():
+    spawn_bp_actor_from_bp_asset('/Game/BlueprintDemostration/Blueprint/BP_Fluorescent_Pink.BP_Fluorescent_Pink')
+
+
 #######################################################################
 # copy the following code to your script
 #######################################################################
