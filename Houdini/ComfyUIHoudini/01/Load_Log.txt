@@ -1,0 +1,10 @@
+Load warnings for D:/WoBok/Learn/TA/Houdini/ComfyUIHoudini/01/2025-11-30.hip
+
+Warning:     Problem while synchronizing child node:
+             Warning:     Skipping unrecognized parameter "premultiplied".
+	[/obj/copnet1/DF_DepthGen1/file1]
+
+             Problem while synchronizing child node:
+             Warning:     Skipping unrecognized parameter "premultiplied".
+	[/obj/copnet1/DF_D2I1/file1]
+
