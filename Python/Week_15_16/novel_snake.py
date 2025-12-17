@@ -5,6 +5,16 @@ import sys
 
 import pygame
 
+def resource_path(relative_path):
+    """ 获取资源的绝对路径，适用于开发环境和 PyInstaller 打包环境 """
+    try:
+        # PyInstaller 创建一个临时文件夹，并将路径存储在 _MEIPASS 中
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 
 """
 新玩法贪吃蛇：赛博朋克版 + 技能系统
@@ -47,11 +57,12 @@ import pygame
 # -------------------- 基本配置 --------------------
 CELL_SIZE = 25
 GRID_WIDTH = 25   # 网格宽度（5的倍数，确保每5格一组）
-GRID_HEIGHT = 20  # 网格高度
-HUD_HEIGHT = 30   # HUD高度
+GRID_HEIGHT = 25  # 网格高度（5的倍数）
+HUD_HEIGHT = 30   # 顶部 HUD 高度
+BOTTOM_BAR_HEIGHT = 30 # 底部提示栏高度
 
 SCREEN_WIDTH = CELL_SIZE * GRID_WIDTH
-SCREEN_HEIGHT = CELL_SIZE * GRID_HEIGHT + HUD_HEIGHT  # 屏幕高度 = 游戏区域 + HUD
+SCREEN_HEIGHT = CELL_SIZE * GRID_HEIGHT + HUD_HEIGHT + BOTTOM_BAR_HEIGHT # 屏幕高度 = HUD + 游戏区域 + 底部栏
 GAME_AREA_Y = HUD_HEIGHT  # 游戏区域起始Y坐标
 
 RENDER_FPS = 60             # 渲染帧率，保证输入跟手
@@ -147,6 +158,14 @@ class SnakeGame:
         pygame.init()
         pygame.display.set_caption("技能贪吃蛇 - 幽灵模式 + 动态障碍")
 
+        # 设置窗口图标
+        try:
+            icon_path = resource_path("snake_icon.png")
+            icon = pygame.image.load(icon_path)
+            pygame.display.set_icon(icon)
+        except Exception as e:
+            print(f"加载图标失败: {e}")
+
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         # 使用支持中文的字体列表，前面优先中文，后面兜底英文
@@ -154,6 +173,7 @@ class SnakeGame:
         self.font_small = pygame.font.SysFont(font_candidates, 18)
         self.font_medium = pygame.font.SysFont(font_candidates, 24, bold=True)  # 中等字体，用于最高分
         self.font_big = pygame.font.SysFont(font_candidates, 36, bold=True)
+        self.font_xlarge = pygame.font.SysFont(font_candidates, 48, bold=True)  # 特大字体，用于标题
 
         # 渲染帧率（固定）
         self.fps = RENDER_FPS
@@ -311,6 +331,14 @@ class SnakeGame:
                         self.paused = True
                     else:
                         self.paused = False
+                    return
+
+                # Game Over 界面输入
+                if self.game_over and not self.entering_name:
+                    if event.key == pygame.K_ESCAPE:
+                        self.reset(start_with_intro=True) # 返回主界面
+                    elif event.key == pygame.K_r:
+                        self.reset(start_with_intro=False) # 重新开始
                     return
 
                 # 启动画面：按空格键开始（ESC 直接退出）
@@ -479,27 +507,27 @@ class SnakeGame:
         return text_rect
     
     def draw_grid(self):
-        """绘制赛博朋克风格的网格（在游戏区域内，包含完整边缘线）"""
-        game_area_height = SCREEN_HEIGHT - HUD_HEIGHT
+        """绘制赛博朋克风格的网格（在游戏区域内，不包括底部栏）"""
+        game_area_end_y = SCREEN_HEIGHT - BOTTOM_BAR_HEIGHT
         
         # 绘制游戏区域的边框（上左下右）
         border_color = (100, 50, 150)
         pygame.draw.line(self.screen, border_color, (0, GAME_AREA_Y), (SCREEN_WIDTH, GAME_AREA_Y), 2)  # 上边
-        pygame.draw.line(self.screen, border_color, (0, GAME_AREA_Y), (0, SCREEN_HEIGHT), 2)  # 左边
-        pygame.draw.line(self.screen, border_color, (0, SCREEN_HEIGHT - 1), (SCREEN_WIDTH, SCREEN_HEIGHT - 1), 2)  # 下边
-        pygame.draw.line(self.screen, border_color, (SCREEN_WIDTH - 1, GAME_AREA_Y), (SCREEN_WIDTH - 1, SCREEN_HEIGHT), 2)  # 右边
+        pygame.draw.line(self.screen, border_color, (0, GAME_AREA_Y), (0, game_area_end_y), 2)  # 左边
+        pygame.draw.line(self.screen, border_color, (0, game_area_end_y - 1), (SCREEN_WIDTH, game_area_end_y - 1), 2)  # 下边
+        pygame.draw.line(self.screen, border_color, (SCREEN_WIDTH - 1, GAME_AREA_Y), (SCREEN_WIDTH - 1, game_area_end_y), 2)  # 右边
         
         # 主网格线（在游戏区域内）
         for x in range(0, SCREEN_WIDTH, CELL_SIZE):
-            pygame.draw.line(self.screen, GRID_COLOR, (x, GAME_AREA_Y), (x, SCREEN_HEIGHT), 1)
-        for y in range(GAME_AREA_Y, SCREEN_HEIGHT, CELL_SIZE):
+            pygame.draw.line(self.screen, GRID_COLOR, (x, GAME_AREA_Y), (x, game_area_end_y), 1)
+        for y in range(GAME_AREA_Y, game_area_end_y, CELL_SIZE):
             pygame.draw.line(self.screen, GRID_COLOR, (0, y), (SCREEN_WIDTH, y), 1)
         
         # 每隔5格绘制高亮线
         bright_grid = (80, 40, 120)
         for x in range(0, SCREEN_WIDTH, CELL_SIZE * 5):
-            pygame.draw.line(self.screen, bright_grid, (x, GAME_AREA_Y), (x, SCREEN_HEIGHT), 2)
-        for y in range(GAME_AREA_Y, SCREEN_HEIGHT, CELL_SIZE * 5):
+            pygame.draw.line(self.screen, bright_grid, (x, GAME_AREA_Y), (x, game_area_end_y), 2)
+        for y in range(GAME_AREA_Y, game_area_end_y, CELL_SIZE * 5):
             pygame.draw.line(self.screen, bright_grid, (0, y), (SCREEN_WIDTH, y), 2)
 
     def draw_snake(self):
@@ -862,17 +890,17 @@ class SnakeGame:
         self.draw_text_with_glow("游戏结束", self.font_big, title_color, (center_x, center_y - 60), center=True)
         
         self.draw_text_with_glow(self.game_over_reason, self.font_small, TEXT_COLOR, (center_x, center_y - 10), center=True)
-        self.draw_text_with_glow(f"最终得分: {self.score}", self.font_small, (255, 255, 0), (center_x, center_y + 30), center=True)
+        self.draw_text_with_glow(f"最终得分: {self.score}", self.font_small, (255, 255, 0), (center_x, center_y + 60), center=True)
         
-        # 显示最高分（在中间区域，字体更大，和开始界面一样，位置往下一点）
+        # 显示最高分（在中间区域，字体更大，和开始界面一样，位置再往下一点）
         if self.leaderboard:
             high_score_text = f"最高分: {self.leaderboard[0]['score']} ({self.leaderboard[0]['name']})"
-            self.draw_text_with_glow(high_score_text, self.font_medium, (255, 215, 0), (center_x, center_y + 60), center=True)
+            self.draw_text_with_glow(high_score_text, self.font_medium, (255, 215, 0), (center_x, center_y + 90), center=True)
         else:
-            self.draw_text_with_glow("暂无最高分", self.font_medium, (150, 150, 150), (center_x, center_y + 60), center=True)
+            self.draw_text_with_glow("暂无最高分", self.font_medium, (150, 150, 150), (center_x, center_y + 90), center=True)
         
         # 提示移到屏幕下方
-        self.draw_text_with_glow("按 R 重新开始，Tab 查看排行榜，ESC 退出", self.font_small, (200, 200, 220), (center_x, SCREEN_HEIGHT - 40), center=True)
+        self.draw_text_with_glow("按 R 重新开始，Tab 查看排行榜，ESC 返回开始界面", self.font_small, (200, 200, 220), (center_x, SCREEN_HEIGHT - 40), center=True)
 
     def draw_start_screen(self):
         """绘制开始界面（赛博朋克风格）"""
@@ -891,22 +919,22 @@ class SnakeGame:
             int(100 + pulse * 100),
             int(200 + pulse * 55)
         )
-        self.draw_text_with_glow("技能贪吃蛇", self.font_big, title_color, (center_x, center_y - 60), center=True)
-        self.draw_text_with_glow("幽灵模式 + 动态障碍", self.font_small, TEXT_COLOR, (center_x, center_y - 20), center=True)
+        self.draw_text_with_glow("技能贪吃蛇", self.font_xlarge, title_color, (center_x, center_y - 60), center=True)
+        self.draw_text_with_glow("幽灵模式 + 动态障碍", self.font_small, TEXT_COLOR, (center_x, center_y - 10), center=True)
         
-        # 显示最高分（在中间区域，字体更大，位置往下一点）
+        # 显示最高分（在中间区域，字体更大，位置再往下一点）
         if self.leaderboard:
             high_score_text = f"最高分: {self.leaderboard[0]['score']} ({self.leaderboard[0]['name']})"
-            self.draw_text_with_glow(high_score_text, self.font_medium, (255, 215, 0), (center_x, center_y + 30), center=True)
+            self.draw_text_with_glow(high_score_text, self.font_medium, (255, 215, 0), (center_x, center_y + 80), center=True)
         else:
-            self.draw_text_with_glow("暂无记录", self.font_medium, (150, 150, 150), (center_x, center_y + 30), center=True)
+            self.draw_text_with_glow("暂无记录", self.font_medium, (150, 150, 150), (center_x, center_y + 40), center=True)
         
         # 提示文字移到屏幕下方（带闪烁）
         blink = (pygame.time.get_ticks() // 800) % 2
         tip_alpha = 220 if blink else 150
         tip_color = (tip_alpha, tip_alpha, 255)
         # 按空格开始提示
-        self.draw_text_with_glow("按空格键开始 (Tab 查看排行榜，ESC 退出)", self.font_small, tip_color, (center_x, SCREEN_HEIGHT - 60), center=True)
+        self.draw_text_with_glow("按空格键开始 (ESC 退出)", self.font_small, tip_color, (center_x, SCREEN_HEIGHT - 60), center=True)
         # 操作提示
         self.draw_text_with_glow("方向键/WASD 移动；空格开启幽灵模式；Tab 暂停并查看排行榜", self.font_small, (190, 190, 210), (center_x, SCREEN_HEIGHT - 35), center=True)
 
@@ -980,6 +1008,26 @@ class SnakeGame:
 
         self.draw_text_with_glow("按 Tab 返回", self.font_small, (200, 200, 220), (center_x, SCREEN_HEIGHT - 40), center=True)
 
+    def draw_bottom_bar(self):
+        """绘制底部技能提示栏"""
+        if self.energy > 0 and not self.game_over:
+            # 只有在有能量且游戏进行中时显示
+            bar_y = SCREEN_HEIGHT - BOTTOM_BAR_HEIGHT
+            
+            # 绘制半透明背景
+            bar_surface = pygame.Surface((SCREEN_WIDTH, BOTTOM_BAR_HEIGHT), pygame.SRCALPHA)
+            bar_surface.fill((10, 5, 20, 180))
+            self.screen.blit(bar_surface, (0, bar_y))
+
+            # 提示文字闪烁
+            blink = (pygame.time.get_ticks() // 400) % 2
+            if blink:
+                prompt_text = "按空格使用幽灵模式技能"
+                prompt_color = (255, 255, 0) # Yellow
+                center_x = SCREEN_WIDTH // 2
+                center_y = bar_y + BOTTOM_BAR_HEIGHT // 2
+                self.draw_text_with_glow(prompt_text, self.font_small, prompt_color, (center_x, center_y), center=True)
+
     def draw_name_input(self):
         """绘制输入名字界面（赛博朋克风格）"""
         overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -1038,14 +1086,9 @@ class SnakeGame:
                 self.clock.tick(self.fps)
                 continue
 
-            # Game Over 状态下单独处理 R / ESC（但不在输入名字时）
+            # Game Over input is now handled in handle_input()
             if self.game_over and not self.entering_name:
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_r]:
-                    self.reset(start_with_intro=False)
-                elif keys[pygame.K_ESCAPE]:
-                    pygame.quit()
-                    sys.exit()
+                pass # All input is handled in handle_input() now
 
             # 只在游戏进行中且未暂停时更新逻辑
             if not self.game_over and not self.paused:
@@ -1064,6 +1107,7 @@ class SnakeGame:
             self.particle_system.draw(self.screen)
             
             self.draw_hud()
+            self.draw_bottom_bar() # Draw the new bottom bar
 
             if self.game_over:
                 self.draw_game_over()
