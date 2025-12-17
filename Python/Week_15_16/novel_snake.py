@@ -46,11 +46,13 @@ import pygame
 
 # -------------------- 基本配置 --------------------
 CELL_SIZE = 25
-GRID_WIDTH = 24   # 网格宽度
+GRID_WIDTH = 25   # 网格宽度（5的倍数，确保每5格一组）
 GRID_HEIGHT = 20  # 网格高度
+HUD_HEIGHT = 30   # HUD高度
 
 SCREEN_WIDTH = CELL_SIZE * GRID_WIDTH
-SCREEN_HEIGHT = CELL_SIZE * GRID_HEIGHT
+SCREEN_HEIGHT = CELL_SIZE * GRID_HEIGHT + HUD_HEIGHT  # 屏幕高度 = 游戏区域 + HUD
+GAME_AREA_Y = HUD_HEIGHT  # 游戏区域起始Y坐标
 
 RENDER_FPS = 60             # 渲染帧率，保证输入跟手
 STEP_INTERVAL_MS = 120       # 蛇移动间隔（毫秒），决定实际速度
@@ -150,6 +152,7 @@ class SnakeGame:
         # 使用支持中文的字体列表，前面优先中文，后面兜底英文
         font_candidates = ["Microsoft YaHei", "SimHei", "Noto Sans CJK SC", "consolas"]
         self.font_small = pygame.font.SysFont(font_candidates, 18)
+        self.font_medium = pygame.font.SysFont(font_candidates, 24, bold=True)  # 中等字体，用于最高分
         self.font_big = pygame.font.SysFont(font_candidates, 36, bold=True)
 
         # 渲染帧率（固定）
@@ -335,9 +338,10 @@ class SnakeGame:
                 elif event.key in (pygame.K_RIGHT, pygame.K_d):
                     if self.direction != (-1, 0):
                         self.next_direction = (1, 0)
-                # 幽灵模式开关
+                # 幽灵模式开关（游戏结束时不能开启）
                 elif event.key == pygame.K_SPACE:
-                    self.toggle_ghost_mode()
+                    if not self.game_over:
+                        self.toggle_ghost_mode()
 
 
     def toggle_ghost_mode(self):
@@ -424,7 +428,7 @@ class SnakeGame:
             self.normal_food_eaten += 1
             # 触发粒子特效
             food_screen_x = self.food_pos[0] * CELL_SIZE + CELL_SIZE // 2
-            food_screen_y = self.food_pos[1] * CELL_SIZE + CELL_SIZE // 2
+            food_screen_y = GAME_AREA_Y + self.food_pos[1] * CELL_SIZE + CELL_SIZE // 2
             self.particle_system.emit(food_screen_x, food_screen_y, FOOD_COLOR, count=25)
             # 触发身体刷光效果
             self.trigger_glow_effect(FOOD_COLOR)
@@ -438,7 +442,7 @@ class SnakeGame:
         if self.energy_food_pos and new_head == self.energy_food_pos:
             # 触发能量食物粒子特效（黄色）
             energy_screen_x = self.energy_food_pos[0] * CELL_SIZE + CELL_SIZE // 2
-            energy_screen_y = self.energy_food_pos[1] * CELL_SIZE + CELL_SIZE // 2
+            energy_screen_y = GAME_AREA_Y + self.energy_food_pos[1] * CELL_SIZE + CELL_SIZE // 2
             self.particle_system.emit(energy_screen_x, energy_screen_y, ENERGY_FOOD_COLOR, count=30)
             # 触发身体刷光效果
             self.trigger_glow_effect(ENERGY_FOOD_COLOR)
@@ -475,22 +479,31 @@ class SnakeGame:
         return text_rect
     
     def draw_grid(self):
-        """绘制赛博朋克风格的网格"""
-        # 主网格线
+        """绘制赛博朋克风格的网格（在游戏区域内，包含完整边缘线）"""
+        game_area_height = SCREEN_HEIGHT - HUD_HEIGHT
+        
+        # 绘制游戏区域的边框（上左下右）
+        border_color = (100, 50, 150)
+        pygame.draw.line(self.screen, border_color, (0, GAME_AREA_Y), (SCREEN_WIDTH, GAME_AREA_Y), 2)  # 上边
+        pygame.draw.line(self.screen, border_color, (0, GAME_AREA_Y), (0, SCREEN_HEIGHT), 2)  # 左边
+        pygame.draw.line(self.screen, border_color, (0, SCREEN_HEIGHT - 1), (SCREEN_WIDTH, SCREEN_HEIGHT - 1), 2)  # 下边
+        pygame.draw.line(self.screen, border_color, (SCREEN_WIDTH - 1, GAME_AREA_Y), (SCREEN_WIDTH - 1, SCREEN_HEIGHT), 2)  # 右边
+        
+        # 主网格线（在游戏区域内）
         for x in range(0, SCREEN_WIDTH, CELL_SIZE):
-            pygame.draw.line(self.screen, GRID_COLOR, (x, 0), (x, SCREEN_HEIGHT), 1)
-        for y in range(0, SCREEN_HEIGHT, CELL_SIZE):
+            pygame.draw.line(self.screen, GRID_COLOR, (x, GAME_AREA_Y), (x, SCREEN_HEIGHT), 1)
+        for y in range(GAME_AREA_Y, SCREEN_HEIGHT, CELL_SIZE):
             pygame.draw.line(self.screen, GRID_COLOR, (0, y), (SCREEN_WIDTH, y), 1)
         
         # 每隔5格绘制高亮线
         bright_grid = (80, 40, 120)
         for x in range(0, SCREEN_WIDTH, CELL_SIZE * 5):
-            pygame.draw.line(self.screen, bright_grid, (x, 0), (x, SCREEN_HEIGHT), 2)
-        for y in range(0, SCREEN_HEIGHT, CELL_SIZE * 5):
+            pygame.draw.line(self.screen, bright_grid, (x, GAME_AREA_Y), (x, SCREEN_HEIGHT), 2)
+        for y in range(GAME_AREA_Y, SCREEN_HEIGHT, CELL_SIZE * 5):
             pygame.draw.line(self.screen, bright_grid, (0, y), (SCREEN_WIDTH, y), 2)
 
     def draw_snake(self):
-        """绘制蛇（带霓虹发光效果和刷光效果）"""
+        """绘制蛇（圆球状，带渐变色、光泽效果和刷光效果）"""
         # 计算刷光效果进度
         glow_progress = -1  # -1表示无效，0-1表示从头到尾的进度
         if self.glow_effect_active:
@@ -502,13 +515,34 @@ class SnakeGame:
         
         snake_length = len(self.snake)
         
+        # 幽灵模式闪烁效果：由慢变快，提示即将结束
+        ghost_blink = False
+        ghost_blink_interval = 200  # 默认200ms
+        if self.ghost_mode:
+            time_left = max(0, self.ghost_end_time - pygame.time.get_ticks())
+            # 剩余时间越少，闪烁越快
+            if time_left < 2000:  # 最后2秒
+                ghost_blink_interval = 50  # 很快
+            elif time_left < 3000:  # 最后3秒
+                ghost_blink_interval = 100  # 较快
+            elif time_left < 4000:  # 最后4秒
+                ghost_blink_interval = 150  # 中等
+            ghost_blink = (pygame.time.get_ticks() // ghost_blink_interval) % 2 == 0
+        
         for i, (x, y) in enumerate(self.snake):
-            rect = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            center_x = x * CELL_SIZE + CELL_SIZE // 2
+            center_y = GAME_AREA_Y + y * CELL_SIZE + CELL_SIZE // 2
+            
+            # 头部和身体大小不同
             if i == 0:
-                color = SNAKE_HEAD_COLOR
+                # 头部：稍大
+                radius = CELL_SIZE // 2 - 1
+                base_color = SNAKE_HEAD_COLOR
                 glow_color = SNAKE_HEAD_COLOR
             else:
-                color = SNAKE_COLOR
+                # 身体：比头部小（稍微大一点）
+                radius = int(CELL_SIZE * 0.42)  # 身体半径约为头部的84%
+                base_color = SNAKE_COLOR
                 glow_color = SNAKE_GLOW
 
             # 刷光效果：检查当前节点是否应该被刷光点亮
@@ -521,47 +555,127 @@ class SnakeGame:
                     is_glowing = True
                     # 根据距离计算亮度
                     distance_factor = 1.0 - abs(i - glow_position) / glow_width
-                    # 替换颜色为刷光颜色
-                    blend_factor = distance_factor * 0.8
-                    color = tuple(
-                        int(color[j] * (1 - blend_factor) + self.glow_effect_color[j] * blend_factor)
+                    # 替换颜色为刷光颜色，并增加亮度
+                    blend_factor = distance_factor * 0.9
+                    # 混合刷光颜色，并增加整体亮度
+                    base_color = tuple(
+                        min(255, int((base_color[j] * (1 - blend_factor) + self.glow_effect_color[j] * blend_factor) * 1.3))
                         for j in range(3)
                     )
-                    glow_color = self.glow_effect_color
+                    glow_color = tuple(min(255, int(c * 1.2)) for c in self.glow_effect_color)
 
+            # 幽灵模式：半透明闪烁
+            alpha = 255
             if self.ghost_mode:
-                # 幽灵模式下半透明效果
-                shade = 60
-                color = (
-                    min(color[0] + shade, 255),
-                    min(color[1] + shade, 255),
-                    min(color[2] + shade, 255),
-                )
+                if ghost_blink:
+                    alpha = 120  # 半透明
+                else:
+                    alpha = 200  # 稍微透明
             
-            # 绘制发光层（多层，越外越淡）
-            glow_intensity = 6 if is_glowing else 4  # 刷光时加强发光
-            for offset in range(glow_intensity, 0, -1):
-                glow_rect = pygame.Rect(
-                    x * CELL_SIZE - offset,
-                    y * CELL_SIZE - offset,
-                    CELL_SIZE + offset * 2,
-                    CELL_SIZE + offset * 2
+            # 渐变色：从头部到尾部颜色渐变
+            if snake_length > 1:
+                gradient_factor = i / max(1, snake_length - 1)
+                # 从头部颜色渐变到尾部颜色（稍微变暗）
+                color = tuple(
+                    int(base_color[j] * (1 - gradient_factor * 0.3))
+                    for j in range(3)
                 )
-                alpha_surf = pygame.Surface((glow_rect.width, glow_rect.height), pygame.SRCALPHA)
-                alpha = (40 if is_glowing else 30) // offset
-                pygame.draw.rect(alpha_surf, (*glow_color, alpha), alpha_surf.get_rect(), border_radius=3)
-                self.screen.blit(alpha_surf, glow_rect)
-            
-            # 绘制实体
-            pygame.draw.rect(self.screen, color, rect, border_radius=2)
-            # 内部高光
-            inner_rect = pygame.Rect(x * CELL_SIZE + 2, y * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4)
-            if is_glowing:
-                # 刷光时内部更亮
-                lighter = tuple(min(c + 100, 255) for c in color)
             else:
-                lighter = tuple(min(c + 50, 255) for c in color)
-            pygame.draw.rect(self.screen, lighter, inner_rect, border_radius=1)
+                color = base_color
+            
+            # 绘制发光层（多层圆形，越外越淡）
+            glow_intensity = 6 if is_glowing else 4  # 刷光时加强发光
+            for r in range(radius + glow_intensity, radius, -1):
+                alpha_glow = int((30 if is_glowing else 20) * (1 - (r - radius) / glow_intensity))
+                if self.ghost_mode:
+                    alpha_glow = int(alpha_glow * (alpha / 255))
+                s = pygame.Surface((r*2, r*2), pygame.SRCALPHA)
+                pygame.draw.circle(s, (*glow_color, alpha_glow), (r, r), r)
+                self.screen.blit(s, (center_x - r, center_y - r))
+            
+            # 绘制主体圆球（带渐变和光泽）
+            # 创建渐变表面
+            ball_surf = pygame.Surface((radius*2, radius*2), pygame.SRCALPHA)
+            
+            # 绘制基础圆球
+            pygame.draw.circle(ball_surf, (*color, alpha), (radius, radius), radius)
+            
+            # 添加光泽效果（高光）
+            highlight_radius = int(radius * 0.6)
+            highlight_offset_x = int(radius * 0.3)
+            highlight_offset_y = int(radius * 0.3)
+            highlight_color = tuple(min(c + 80, 255) for c in color)
+            if alpha < 255:
+                highlight_alpha = int(alpha * 0.8)
+            else:
+                highlight_alpha = 200
+            pygame.draw.circle(
+                ball_surf, (*highlight_color, highlight_alpha),
+                (radius - highlight_offset_x, radius - highlight_offset_y),
+                highlight_radius
+            )
+            
+            # 添加顶部小高光点
+            small_highlight_radius = int(radius * 0.3)
+            small_highlight_pos_x = int(radius * 0.4)
+            small_highlight_pos_y = int(radius * 0.4)
+            pygame.draw.circle(
+                ball_surf, (255, 255, 255, min(alpha, 180)),
+                (radius - small_highlight_pos_x, radius - small_highlight_pos_y),
+                small_highlight_radius
+            )
+            
+            # 绘制到屏幕
+            self.screen.blit(ball_surf, (center_x - radius, center_y - radius))
+            
+            # 头部添加眼睛
+            if i == 0:
+                # 根据方向确定眼睛位置（眼睛在移动方向的前方，左右对称）
+                dx, dy = self.direction
+                eye_size = max(2, radius // 4)  # 眼睛大小
+                eye_forward = radius // 2  # 眼睛在移动方向前方的偏移
+                eye_side = radius // 3  # 眼睛左右对称的偏移
+                
+                # 计算眼睛位置（在移动方向前方，左右对称）
+                if dx == 1:  # 向右移动
+                    eye1_x = center_x + eye_forward
+                    eye1_y = center_y - eye_side
+                    eye2_x = center_x + eye_forward
+                    eye2_y = center_y + eye_side
+                elif dx == -1:  # 向左移动
+                    eye1_x = center_x - eye_forward
+                    eye1_y = center_y - eye_side
+                    eye2_x = center_x - eye_forward
+                    eye2_y = center_y + eye_side
+                elif dy == -1:  # 向上移动
+                    eye1_x = center_x - eye_side
+                    eye1_y = center_y - eye_forward
+                    eye2_x = center_x + eye_side
+                    eye2_y = center_y - eye_forward
+                else:  # 向下移动 (dy == 1)
+                    eye1_x = center_x - eye_side
+                    eye1_y = center_y + eye_forward
+                    eye2_x = center_x + eye_side
+                    eye2_y = center_y + eye_forward
+                
+                # 绘制眼睛（白色高光，带发光效果）
+                eye_alpha = min(alpha, 255)
+                # 眼睛发光层
+                for r in range(eye_size + 2, eye_size, -1):
+                    eye_glow_alpha = int(60 * (1 - (r - eye_size) / 2))
+                    s = pygame.Surface((r*2, r*2), pygame.SRCALPHA)
+                    pygame.draw.circle(s, (255, 255, 255, eye_glow_alpha), (r, r), r)
+                    self.screen.blit(s, (eye1_x - r, eye1_y - r))
+                    self.screen.blit(s, (eye2_x - r, eye2_y - r))
+                
+                # 绘制眼睛（白色）
+                pygame.draw.circle(self.screen, (255, 255, 255), (eye1_x, eye1_y), eye_size)
+                pygame.draw.circle(self.screen, (255, 255, 255), (eye2_x, eye2_y), eye_size)
+                
+                # 眼睛内部小黑点（瞳孔）
+                pupil_size = max(1, eye_size // 2)
+                pygame.draw.circle(self.screen, (0, 0, 0), (eye1_x, eye1_y), pupil_size)
+                pygame.draw.circle(self.screen, (0, 0, 0), (eye2_x, eye2_y), pupil_size)
 
     def draw_foods(self):
         """绘制食物（带霓虹发光和脉冲效果）"""
@@ -570,7 +684,7 @@ class SnakeGame:
         if self.food_pos:
             x, y = self.food_pos
             cx = x * CELL_SIZE + CELL_SIZE // 2
-            cy = y * CELL_SIZE + CELL_SIZE // 2
+            cy = GAME_AREA_Y + y * CELL_SIZE + CELL_SIZE // 2
             
             # 发光层（脉冲效果）
             glow_radius = int(CELL_SIZE * 0.8 + pulse * 8)
@@ -587,14 +701,14 @@ class SnakeGame:
 
         if self.energy_food_pos:
             x, y = self.energy_food_pos
-            rect = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            rect = pygame.Rect(x * CELL_SIZE, GAME_AREA_Y + y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             
             # 发光层（脉冲效果）
             glow_size = int(pulse * 6)
             for offset in range(6, 0, -1):
                 glow_rect = pygame.Rect(
                     x * CELL_SIZE - offset - glow_size,
-                    y * CELL_SIZE - offset - glow_size,
+                    GAME_AREA_Y + y * CELL_SIZE - offset - glow_size,
                     CELL_SIZE + (offset + glow_size) * 2,
                     CELL_SIZE + (offset + glow_size) * 2
                 )
@@ -605,7 +719,7 @@ class SnakeGame:
             
             # 实体（菱形）
             center_x = x * CELL_SIZE + CELL_SIZE // 2
-            center_y = y * CELL_SIZE + CELL_SIZE // 2
+            center_y = GAME_AREA_Y + y * CELL_SIZE + CELL_SIZE // 2
             points = [
                 (center_x, center_y - CELL_SIZE // 2 + 2),
                 (center_x + CELL_SIZE // 2 - 2, center_y),
@@ -626,7 +740,7 @@ class SnakeGame:
         """绘制荆棘障碍（赛博朋克风格）"""
         for x, y in self.obstacles:
             center_x = x * CELL_SIZE + CELL_SIZE // 2
-            center_y = y * CELL_SIZE + CELL_SIZE // 2
+            center_y = GAME_AREA_Y + y * CELL_SIZE + CELL_SIZE // 2
             
             # 发光层（圆形扩散）
             for r in range(18, 8, -2):
@@ -699,28 +813,38 @@ class SnakeGame:
             pygame.draw.circle(self.screen, (255, 150, 255), (center_x, center_y), 2)
 
     def draw_hud(self):
-        """绘制HUD（赛博朋克风格）"""
+        """绘制HUD（赛博朋克风格，显示在屏幕上方）"""
+        # 绘制半透明背景条
+        hud_height = 30
+        hud_surface = pygame.Surface((SCREEN_WIDTH, hud_height), pygame.SRCALPHA)
+        hud_surface.fill((10, 5, 20, 200))  # 半透明深色背景
+        self.screen.blit(hud_surface, (0, 0))
+        
         # 左上角：分数 / 能量 / 幽灵剩余时间
         time_left = 0
         if self.ghost_mode:
             time_left = max(0, (self.ghost_end_time - pygame.time.get_ticks()) // 1000)
 
-        text = f"Score: {self.score}   Energy: {self.energy}   "
+        text = f"分数: {self.score}   能量: {self.energy}   "
         if self.ghost_mode:
-            text += f"Ghost: {time_left}s"
+            text += f"幽灵模式: {time_left}秒"
         else:
-            text += "Ghost: OFF"
+            text += "幽灵模式: 关闭"
 
-        self.draw_text_with_glow(text, self.font_small, TEXT_COLOR, (8, 4))
+        # 计算垂直居中位置
+        text_surf = self.font_small.render(text, True, TEXT_COLOR)
+        text_height = text_surf.get_height()
+        hud_center_y = (HUD_HEIGHT - text_height) // 2
+
+        self.draw_text_with_glow(text, self.font_small, TEXT_COLOR, (8, hud_center_y))
 
         # 右上角显示最高分
         if self.leaderboard:
             high_score_text = f"最高分: {self.leaderboard[0]['score']}"
-            self.draw_text_with_glow(high_score_text, self.font_small, (255, 215, 0), (SCREEN_WIDTH - 120, 4))
-
-        hint_text = "方向键/WASD 移动，空格 幽灵模式，Tab 排行榜，ESC 退出"
-        hint_color = (150, 150, 200)
-        self.draw_text_with_glow(hint_text, self.font_small, hint_color, (8, SCREEN_HEIGHT - 24))
+            high_score_surf = self.font_small.render(high_score_text, True, (255, 215, 0))
+            high_score_height = high_score_surf.get_height()
+            high_score_y = (HUD_HEIGHT - high_score_height) // 2
+            self.draw_text_with_glow(high_score_text, self.font_small, (255, 215, 0), (SCREEN_WIDTH - 120, high_score_y))
 
     def draw_game_over(self):
         """绘制Game Over界面（赛博朋克风格）"""
@@ -735,19 +859,20 @@ class SnakeGame:
         # 标题带闪烁效果
         blink = (pygame.time.get_ticks() // 500) % 2
         title_color = (255, 0, 127) if blink else (255, 50, 150)
-        self.draw_text_with_glow("GAME OVER", self.font_big, title_color, (center_x, center_y - 60), center=True)
+        self.draw_text_with_glow("游戏结束", self.font_big, title_color, (center_x, center_y - 60), center=True)
         
         self.draw_text_with_glow(self.game_over_reason, self.font_small, TEXT_COLOR, (center_x, center_y - 10), center=True)
-        self.draw_text_with_glow(f"最终得分: {self.score}", self.font_small, (255, 255, 0), (center_x, center_y + 20), center=True)
+        self.draw_text_with_glow(f"最终得分: {self.score}", self.font_small, (255, 255, 0), (center_x, center_y + 30), center=True)
         
-        # 显示最高分
+        # 显示最高分（在中间区域，字体更大，和开始界面一样，位置往下一点）
         if self.leaderboard:
             high_score_text = f"最高分: {self.leaderboard[0]['score']} ({self.leaderboard[0]['name']})"
-            self.draw_text_with_glow(high_score_text, self.font_small, (255, 215, 0), (center_x, center_y + 50), center=True)
+            self.draw_text_with_glow(high_score_text, self.font_medium, (255, 215, 0), (center_x, center_y + 60), center=True)
         else:
-            self.draw_text_with_glow("暂无最高分", self.font_small, (150, 150, 150), (center_x, center_y + 50), center=True)
+            self.draw_text_with_glow("暂无最高分", self.font_medium, (150, 150, 150), (center_x, center_y + 60), center=True)
         
-        self.draw_text_with_glow("按 R 重新开始，Tab 查看排行榜，ESC 退出", self.font_small, (200, 200, 220), (center_x, center_y + 80), center=True)
+        # 提示移到屏幕下方
+        self.draw_text_with_glow("按 R 重新开始，Tab 查看排行榜，ESC 退出", self.font_small, (200, 200, 220), (center_x, SCREEN_HEIGHT - 40), center=True)
 
     def draw_start_screen(self):
         """绘制开始界面（赛博朋克风格）"""
@@ -769,19 +894,21 @@ class SnakeGame:
         self.draw_text_with_glow("技能贪吃蛇", self.font_big, title_color, (center_x, center_y - 60), center=True)
         self.draw_text_with_glow("幽灵模式 + 动态障碍", self.font_small, TEXT_COLOR, (center_x, center_y - 20), center=True)
         
-        # 显示最高分
+        # 显示最高分（在中间区域，字体更大，位置往下一点）
         if self.leaderboard:
             high_score_text = f"最高分: {self.leaderboard[0]['score']} ({self.leaderboard[0]['name']})"
-            self.draw_text_with_glow(high_score_text, self.font_small, (255, 215, 0), (center_x, center_y + 10), center=True)
+            self.draw_text_with_glow(high_score_text, self.font_medium, (255, 215, 0), (center_x, center_y + 30), center=True)
         else:
-            self.draw_text_with_glow("暂无记录", self.font_small, (150, 150, 150), (center_x, center_y + 10), center=True)
+            self.draw_text_with_glow("暂无记录", self.font_medium, (150, 150, 150), (center_x, center_y + 30), center=True)
         
-        # 提示文字带闪烁
+        # 提示文字移到屏幕下方（带闪烁）
         blink = (pygame.time.get_ticks() // 800) % 2
         tip_alpha = 220 if blink else 150
         tip_color = (tip_alpha, tip_alpha, 255)
-        self.draw_text_with_glow("按空格键开始 (Tab 查看排行榜，ESC 退出)", self.font_small, tip_color, (center_x, center_y + 50), center=True)
-        self.draw_text_with_glow("方向键/WASD 移动；空格开启幽灵模式；Tab 暂停并查看排行榜", self.font_small, (190, 190, 210), (center_x, center_y + 80), center=True)
+        # 按空格开始提示
+        self.draw_text_with_glow("按空格键开始 (Tab 查看排行榜，ESC 退出)", self.font_small, tip_color, (center_x, SCREEN_HEIGHT - 60), center=True)
+        # 操作提示
+        self.draw_text_with_glow("方向键/WASD 移动；空格开启幽灵模式；Tab 暂停并查看排行榜", self.font_small, (190, 190, 210), (center_x, SCREEN_HEIGHT - 35), center=True)
 
     def draw_leaderboard(self):
         """绘制排行榜界面（赛博朋克风格）"""
@@ -804,17 +931,46 @@ class SnakeGame:
             self.draw_text_with_glow("暂无记录", self.font_small, TEXT_COLOR, (center_x, y_start + 40), center=True)
         else:
             y_offset = y_start
+            current_time = pygame.time.get_ticks()
             for i, entry in enumerate(self.leaderboard[:MAX_LEADERBOARD_ENTRIES]):
                 rank_text = f"{i+1}. {entry['name']}"
                 score_text = f"{entry['score']}"
                 
-                # 前三名用不同颜色（赛博朋克配色）
+                # 前三名用不同颜色和特效
                 if i == 0:
-                    color = (255, 215, 0)  # 金色
+                    # 第一名：金色，闪烁效果（与第二名交换）
+                    blink = (current_time // 300) % 2
+                    if blink:
+                        color = (255, 215, 0)  # 亮金色
+                    else:
+                        color = (200, 180, 0)  # 暗金色
+                    # 添加发光边框
+                    for glow_offset in [(1,1), (-1,1), (1,-1), (-1,-1)]:
+                        glow_surf = self.font_small.render(rank_text, True, (255, 200, 50))
+                        self.screen.blit(glow_surf, (center_x - 150 + glow_offset[0], y_offset + glow_offset[1]))
+                        glow_surf2 = self.font_small.render(score_text, True, (255, 200, 50))
+                        self.screen.blit(glow_surf2, (center_x + 100 + glow_offset[0], y_offset + glow_offset[1]))
                 elif i == 1:
-                    color = (0, 255, 255)  # 青色
+                    # 第二名：紫色，脉冲效果（与第一名交换，颜色改为紫色）
+                    pulse = abs((current_time % 1500) / 750 - 1)
+                    color = (
+                        int(200 + pulse * 55),
+                        int(100 + pulse * 100),
+                        int(255)
+                    )
+                    # 添加额外的发光效果
+                    for glow_offset in range(3, 0, -1):
+                        glow_alpha = int(40 * pulse / glow_offset)
+                        glow_color = tuple(min(255, c + 50) for c in color)
+                        glow_surf = self.font_small.render(rank_text, True, glow_color)
+                        glow_surf.set_alpha(glow_alpha)
+                        self.screen.blit(glow_surf, (center_x - 150 - glow_offset, y_offset - glow_offset))
+                        glow_surf2 = self.font_small.render(score_text, True, glow_color)
+                        glow_surf2.set_alpha(glow_alpha)
+                        self.screen.blit(glow_surf2, (center_x + 100 - glow_offset, y_offset - glow_offset))
                 elif i == 2:
-                    color = (255, 0, 255)  # 品红
+                    # 第三名：品红，无特效
+                    color = (255, 0, 255)  # 品红色
                 else:
                     color = TEXT_COLOR
 
