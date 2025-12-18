@@ -6,6 +6,8 @@ from typing import Any, Dict
 DEFAULT_SETTINGS: Dict[str, Any] = {
     "show_fps": False,
     "log_events": False,
+    "debug_exceptions": False,
+    "tuning": {},
 }
 
 class SettingsService:
@@ -14,6 +16,15 @@ class SettingsService:
         self._data: Dict[str, Any] = {}
         self.load()
 
+    def _maybe_print_exception(self) -> None:
+        try:
+            if self.debug_exceptions:
+                import traceback
+
+                traceback.print_exc()
+        except Exception:
+            pass
+
     def load(self) -> None:
         if os.path.exists(self.path):
             try:
@@ -21,6 +32,7 @@ class SettingsService:
                     self._data = json.load(f)
             except Exception:
                 self._data = {}
+                self._maybe_print_exception()
         # Ensure defaults present
         changed = False
         for k, v in DEFAULT_SETTINGS.items():
@@ -36,7 +48,7 @@ class SettingsService:
             with open(self.path, "w", encoding="utf-8") as f:
                 json.dump(self._data, f, ensure_ascii=False, indent=2)
         except Exception:
-            pass
+            self._maybe_print_exception()
 
     def get(self, key: str) -> Any:
         return self._data.get(key, DEFAULT_SETTINGS.get(key))
@@ -61,3 +73,10 @@ class SettingsService:
     def log_events(self, value: bool) -> None:
         self.set("log_events", bool(value))
 
+    @property
+    def debug_exceptions(self) -> bool:
+        return bool(self.get("debug_exceptions"))
+
+    @debug_exceptions.setter
+    def debug_exceptions(self, value: bool) -> None:
+        self.set("debug_exceptions", bool(value))

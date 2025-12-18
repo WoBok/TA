@@ -3,6 +3,7 @@ import pygame
 from src.core.scene import Scene
 from src.managers.leaderboard import load_leaderboard
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, BG_COLOR, TEXT_COLOR, GRID_COLOR, CELL_SIZE
+from src.scenes.scene_keys import SCENE_GAME, SCENE_OVERLAY_LEADERBOARD, SCENE_OVERLAY_SETTINGS, SCENE_OVERLAY_HELP
 
 class MenuScene(Scene):
     """Start menu, shows title, high score, and instructions.
@@ -21,14 +22,13 @@ class MenuScene(Scene):
                 if e.key == pygame.K_ESCAPE:
                     self.app.running = False
                 elif e.key == pygame.K_SPACE:
-                    from src.scenes.game_scene import GameScene
-                    self.app.push_scene(GameScene)
+                    self.app.push_scene_key(SCENE_GAME)
                 elif e.key == pygame.K_TAB:
-                    from src.scenes.overlay_leaderboard import LeaderboardOverlayScene
-                    self.app.push_scene(LeaderboardOverlayScene)
+                    self.app.push_scene_key(SCENE_OVERLAY_LEADERBOARD)
                 elif e.key == pygame.K_o:
-                    from src.scenes.overlay_settings import SettingsOverlayScene
-                    self.app.push_scene(SettingsOverlayScene)
+                    self.app.push_scene_key(SCENE_OVERLAY_SETTINGS)
+                elif e.key == pygame.K_h:
+                    self.app.push_scene_key(SCENE_OVERLAY_HELP)
 
     def update(self, dt: float) -> None:
         pass

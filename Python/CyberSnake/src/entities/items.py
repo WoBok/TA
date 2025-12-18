@@ -1,13 +1,10 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Tuple, Optional, TYPE_CHECKING
+from dataclasses import dataclass
+from typing import Tuple
 
 import pygame
 
-from typing import Tuple, Optional, TYPE_CHECKING, List
-
-if TYPE_CHECKING:
-    from src.scenes.game_scene import GameScene
+from src.entities.game_context import GameContext
 
 # Item system stubs to support future gameplay expansion
 
@@ -17,7 +14,7 @@ class Item:
     color: Tuple[int, int, int] = (255, 255, 255)
     duration_ms: int = 0  # 0 means instant effect
 
-    def apply(self, game: "GameScene") -> None:
+    def apply(self, game: GameContext) -> None:
         """Apply the effect to the game. To be implemented in subclasses."""
         raise NotImplementedError
 
@@ -39,7 +36,7 @@ class Magnet(Item):
     duration_ms: int = 5000
     radius_cells: int = 5
 
-    def apply(self, game: "GameScene"):
+    def apply(self, game: GameContext):
         game.effects.enable_magnet(self.radius_cells, self.duration_ms)
 
 
@@ -47,7 +44,7 @@ class Magnet(Item):
 class Bomb(Item):
     color: Tuple[int, int, int] = (40, 40, 40)  # Dark Grey/Black
 
-    def apply(self, game: "GameScene"):
+    def apply(self, game: GameContext):
         game.obstacles.clear()
         game.effects.trigger_bomb_explosion(self.pos)
 
@@ -57,20 +54,24 @@ class Scissors(Item):
     color: Tuple[int, int, int] = (0, 255, 127) # Green
     reduce_len: int = 4
 
-    def apply(self, game: "GameScene"):
+    def apply(self, game: GameContext):
         game.shrink_snake(self.reduce_len)
 
 
 @dataclass
+class ScoreBoost(Item):
+    color: Tuple[int, int, int] = (80, 180, 255)
+    bonus: int = 25
+
+    def apply(self, game: GameContext):
+        game.score += int(self.bonus)
+
+
+@dataclass
 class RottenApple(Item):
-    color: Tuple[int, int, int] = (139, 0, 255) # Purple
+    color: Tuple[int, int, int] = (40, 40, 40)  # Dark Grey/Black
     duration_ms: int = 5000
 
-    def apply(self, game: "GameScene"):
-        game.effects.enable_inverted_controls(self.duration_ms)
-
-    color: Tuple[int, int, int] = (40, 40, 40)  # Dark Grey/Black
-
-    def apply(self, game: "GameScene"):
+    def apply(self, game: GameContext):
         game.obstacles.clear()
         game.effects.trigger_bomb_explosion(self.pos)

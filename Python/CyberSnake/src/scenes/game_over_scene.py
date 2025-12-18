@@ -3,6 +3,7 @@ import pygame
 from src.core.scene import Scene
 from src.managers.leaderboard import is_high_score, add_entry, save_leaderboard
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, BG_COLOR, TEXT_COLOR
+from src.scenes.scene_keys import SCENE_GAME, SCENE_MENU, SCENE_OVERLAY_LEADERBOARD, SCENE_OVERLAY_HELP
 
 class GameOverScene(Scene):
     """Displays final score, handles high score entry, and offers restart/exit options."""
@@ -29,8 +30,10 @@ class GameOverScene(Scene):
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         for e in events:
             if e.type == pygame.KEYDOWN and e.key == pygame.K_TAB:
-                from src.scenes.overlay_leaderboard import LeaderboardOverlayScene
-                self.app.push_scene(LeaderboardOverlayScene)
+                self.app.push_scene_key(SCENE_OVERLAY_LEADERBOARD)
+                continue
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_h:
+                self.app.push_scene_key(SCENE_OVERLAY_HELP)
                 continue
 
             if self.entering_name:
@@ -49,11 +52,9 @@ class GameOverScene(Scene):
             else:
                 if e.type == pygame.KEYDOWN:
                     if e.key == pygame.K_r:
-                        from src.scenes.game_scene import GameScene
-                        self.app.push_scene(GameScene)
+                        self.app.push_scene_key(SCENE_GAME)
                     elif e.key == pygame.K_ESCAPE:
-                        from src.scenes.menu_scene import MenuScene
-                        self.app.push_scene(MenuScene)
+                        self.app.push_scene_key(SCENE_MENU)
 
     def update(self, dt: float) -> None:
         pass

@@ -52,6 +52,35 @@ class AISnake:
             radius = CELL_SIZE // 2 - 2 if i == 0 else int(CELL_SIZE * 0.4)
             pygame.draw.circle(surface, self.color, (cx, cy), radius)
 
+
+@dataclass
+class WanderingAISnake:
+    body: List[Vec2]
+    direction: Vec2 = (1, 0)
+    color: Tuple[int, int, int] = (255, 120, 60)
+
+    def head(self) -> Vec2:
+        return self.body[0]
+
+    def update_ai(self, target_foods: List[Vec2]):
+        if random.random() < 0.25:
+            self.direction = random.choice([(0, 1), (0, -1), (1, 0), (-1, 0)])
+
+    def step(self, grow: bool = False):
+        hx, hy = self.head()
+        dx, dy = self.direction
+        new_head = ((hx + dx) % GRID_WIDTH, (hy + dy) % GRID_HEIGHT)
+        self.body.insert(0, new_head)
+        if not grow:
+            self.body.pop()
+
+    def draw(self, surface: pygame.Surface) -> None:
+        for i, (x, y) in enumerate(self.body):
+            cx = x * CELL_SIZE + CELL_SIZE // 2
+            cy = GAME_AREA_Y + y * CELL_SIZE + CELL_SIZE // 2
+            radius = CELL_SIZE // 2 - 2 if i == 0 else int(CELL_SIZE * 0.4)
+            pygame.draw.circle(surface, self.color, (cx, cy), radius)
+
 @dataclass
 class GhostHunter:
     pos: Vec2

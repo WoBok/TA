@@ -3,6 +3,10 @@ import random
 from typing import List
 
 from src.core.scene import Scene
+from src.systems.fixed_step_system import FixedStepSystem
+from src.systems.game_tuning import GameTuning
+from src.systems.hud_renderer import HudRenderer
+from src.systems.spawn_system import SpawnSystem
 from src.managers.input_manager import InputManager
 from src.managers.leaderboard import load_leaderboard
 from src.entities.particle import ParticleSystem
@@ -10,18 +14,24 @@ from src.entities.snake import Snake
 from src.entities.food import Food, EnergyFood
 from src.entities.obstacle import Obstacles
 from src.entities.items import Item
-from src.registries.items import get_random_item
 from src.entities.portal import PortalPair
 from src.entities.trap import SpikeTrap, LavaPool
-from src.registries.traps import get_random_trap
-from src.entities.enemy import AISnake, GhostHunter
+from src.entities.enemy import GhostHunter
+from src.entities.enemy_types import AIEnemy
 from src.entities.boss import Boss
 from src.managers.effects import EffectsManager
+from src.scenes.scene_keys import (
+    SCENE_GAME_OVER,
+    SCENE_MENU,
+    SCENE_OVERLAY_LEADERBOARD,
+    SCENE_OVERLAY_PAUSE,
+    SCENE_OVERLAY_SETTINGS,
+    SCENE_OVERLAY_HELP,
+)
 
 from config import (
     SCREEN_WIDTH, SCREEN_HEIGHT, GAME_AREA_Y, BG_COLOR, GRID_COLOR, CELL_SIZE, GRID_WIDTH, GRID_HEIGHT,
-    STEP_INTERVAL_MS, FOOD_PER_OBSTACLE, GHOST_DURATION, TEXT_COLOR, FOOD_COLOR, ENERGY_FOOD_COLOR, BOTTOM_BAR_HEIGHT,
-    HUD_HEIGHT,
+    STEP_INTERVAL_MS, GHOST_DURATION, BOTTOM_BAR_HEIGHT,
 )
 
 class GameScene(Scene):
@@ -30,6 +40,13 @@ class GameScene(Scene):
     def __init__(self, app: "GameApp"):
         super().__init__(app)
         self.ui = self.app.services["ui"]
+        self.settings = self.app.services["settings"]
+        self.tuning: GameTuning = GameTuning.from_settings(self.settings)
+
+        self.spawner = SpawnSystem()
+        self.fixed_stepper = FixedStepSystem()
+        self.hud_renderer = HudRenderer()
+
         self.input_manager = InputManager()
         self.particles = ParticleSystem()
         self.effects = EffectsManager(self.particles, self.input_manager)
@@ -47,7 +64,7 @@ class GameScene(Scene):
         self.items: List[Item] = []
         self.portals: PortalPair | None = None
         self.traps: List[SpikeTrap | LavaPool] = []
-        self.ai_snakes: List[AISnake] = []
+        self.ai_snakes: List[AIEnemy] = []
         self.ghost_hunters: List[GhostHunter] = [GhostHunter(pos=(0,0)) for _ in range(3)]
         self.boss: Boss | None = None
 
@@ -57,19 +74,31 @@ class GameScene(Scene):
         self.food_for_boss_counter = 0
         self.combo_multiplier = 1
         self.last_food_eat_time = 0
-        self.combo_window = 2000 # 2 seconds
+        self.combo_window = int(self.tuning.combo_window_ms) # 2 seconds
 
         self.ghost_mode = False
         self.ghost_end_time = 0
         self.last_item_spawn_time = pygame.time.get_ticks()
         self.last_ai_spawn_time = pygame.time.get_ticks()
-        self.item_spawn_interval = 8000
-        self.ai_spawn_interval = random.randint(10000, 15000)
+        self.item_spawn_interval = int(self.tuning.item_spawn_interval_ms)
+        self.ai_spawn_interval = random.randint(
+            int(self.tuning.ai_spawn_interval_min_ms),
+            int(self.tuning.ai_spawn_interval_max_ms),
+        )
         self.step_interval_ms = STEP_INTERVAL_MS
         self.move_accum = 0.0
 
         self.spawn_environment()
         self.spawn_food()
+
+    def _maybe_print_exception(self) -> None:
+        try:
+            if getattr(self.settings, "debug_exceptions", False):
+                import traceback
+
+                traceback.print_exc()
+        except Exception:
+            pass
 
     def random_empty_cell(self, size=(1,1)) -> tuple[int, int] | None:
         occupied = set(self.snake.body) | self.obstacles.cells
@@ -99,11 +128,6 @@ class GameScene(Scene):
         
         return random.choice(possible_positions) if possible_positions else None
 
-    def spawn_boss(self):
-        pos = self.random_empty_cell(size=(3,3))
-        if pos and not self.boss:
-            self.boss = Boss(pos=pos)
-
     def handle_food_eat(self, now: int):
         if now - self.last_food_eat_time < self.combo_window:
             self.combo_multiplier = min(8, self.combo_multiplier * 2)
@@ -115,7 +139,7 @@ class GameScene(Scene):
         self.normal_food_eaten_total += 1
         self.food_for_boss_counter += 1
 
-        if self.food_for_boss_counter >= 10:
+        if self.food_for_boss_counter >= int(self.tuning.boss_food_threshold):
             self.food_for_boss_counter = 0
             self.spawn_boss()
 
@@ -135,57 +159,39 @@ class GameScene(Scene):
                 elif e.key == pygame.K_SPACE:
                     self.toggle_ghost_mode()
                 elif e.key == pygame.K_TAB:
-                    from src.scenes.overlay_leaderboard import LeaderboardOverlayScene
-                    self.app.push_scene(LeaderboardOverlayScene)
+                    self.app.push_scene_key(SCENE_OVERLAY_LEADERBOARD)
                     # Let overlay show "(游戏已暂停)" subtitle
                     overlay = self.app.current_scene
                     try:
                         overlay.with_subtitle("(游戏已暂停)")  # type: ignore[attr-defined]
                     except Exception:
-                        pass
+                        self._maybe_print_exception()
                 elif e.key == pygame.K_p:
-                    from src.scenes.overlay_pause import PauseOverlayScene
-                    self.app.push_scene(PauseOverlayScene)
+                    self.app.push_scene_key(SCENE_OVERLAY_PAUSE)
                 elif e.key == pygame.K_o:
-                    from src.scenes.overlay_settings import SettingsOverlayScene
-                    self.app.push_scene(SettingsOverlayScene)
+                    self.app.push_scene_key(SCENE_OVERLAY_SETTINGS)
+                elif e.key == pygame.K_h:
+                    self.app.push_scene_key(SCENE_OVERLAY_HELP)
                 elif e.key == pygame.K_ESCAPE:
-                    from src.scenes.menu_scene import MenuScene
-                    self.app.push_scene(MenuScene)
+                    self.app.push_scene_key(SCENE_MENU)
 
     def spawn_environment(self):
-        p1, p2 = self.random_empty_cell(), self.random_empty_cell()
-        if p1 and p2:
-            self.portals = PortalPair(orange=p1, blue=p2)
-        for _ in range(random.randint(3, 5)):
-            pos = self.random_empty_cell()
-            if pos:
-                trap_cls = get_random_trap()
-                self.traps.append(trap_cls(pos=pos))
+        self.spawner.spawn_environment(self)
 
     def spawn_food(self):
-        pos = self.random_empty_cell()
-        if pos: self.food = Food(pos)
-        if self.energy_food is None and random.random() < 0.3:
-            pos = self.random_empty_cell()
-            if pos: self.energy_food = EnergyFood(pos)
+        self.spawner.spawn_food(self)
 
     def spawn_obstacle(self):
-        pos = self.random_empty_cell()
-        if pos: self.obstacles.add(pos)
+        self.spawner.spawn_obstacle(self)
 
     def spawn_item(self):
-        pos = self.random_empty_cell()
-        if pos:
-            item_cls = get_random_item()
-            self.items.append(item_cls(pos=pos))
-            self.last_item_spawn_time = pygame.time.get_ticks()
+        self.spawner.spawn_item(self)
 
     def spawn_ai_snake(self):
-        start_pos = self.random_empty_cell()
-        if start_pos:
-            self.ai_snakes.append(AISnake(body=[start_pos]))
-            self.last_ai_spawn_time = pygame.time.get_ticks()
+        self.spawner.spawn_ai_snake(self)
+
+    def spawn_boss(self):
+        self.spawner.spawn_boss(self)
 
     def shrink_snake(self, amount: int):
         if len(self.snake.body) <= 3: return
@@ -205,122 +211,13 @@ class GameScene(Scene):
 
     def trigger_game_over(self, reason: str):
         from src.scenes.game_over_scene import GameOverScene
-        self.app.push_scene(GameOverScene)
+        self.app.push_scene_key(SCENE_GAME_OVER)
         game_over_scene = self.app.current_scene
         if isinstance(game_over_scene, GameOverScene):
             game_over_scene.set_stats(self.score, reason, self.leaderboard)
 
     def update_fixed(self, dt: float) -> None:
-        # Accumulate time for movement steps according to step_interval_ms
-        self.move_accum += dt
-        step_sec = self.step_interval_ms / 1000.0
-        steps = int(self.move_accum // step_sec)
-        if steps <= 0:
-            return
-        self.move_accum -= steps * step_sec
-
-        for _ in range(steps):
-            ate_food = False
-            # Move snake one step
-            self.snake.step(ate_food)
-            player_head = self.snake.head()
-
-            # Bounds
-            if not (0 <= player_head[0] < GRID_WIDTH and 0 <= player_head[1] < GRID_HEIGHT):
-                if self.ghost_mode:
-                    self.snake.body[0] = (player_head[0] % GRID_WIDTH, player_head[1] % GRID_HEIGHT)
-                    player_head = self.snake.head()
-                else:
-                    return self.trigger_game_over("撞到边界了！")
-
-            # Portals
-            if self.portals:
-                teleported_pos = self.portals.teleport(player_head)
-                if teleported_pos != player_head:
-                    self.snake.body[0] = teleported_pos
-                    player_head = teleported_pos
-
-            # Traps
-            for trap in self.traps:
-                if trap.is_active() and player_head == trap.pos and not self.ghost_mode:
-                    return self.trigger_game_over("掉进了陷阱！")
-
-            # Obstacles / self-collision
-            if player_head in self.obstacles.cells and not self.ghost_mode:
-                return self.trigger_game_over("撞到荆棘了！")
-            if player_head in self.snake.body[1:] and not self.ghost_mode:
-                return self.trigger_game_over("撞到自己了！")
-
-            # Boss interactions
-            if self.boss:
-                for bullet in self.boss.bullets:
-                    if bullet.get_grid_pos() == player_head and not self.ghost_mode:
-                        return self.trigger_game_over("被Boss子弹击中！")
-                if player_head in self.boss.get_body_cells():
-                    if self.ghost_mode and not self.boss.is_shield_active:
-                        self.boss = None
-                        self.score += 100
-                    elif not self.ghost_mode:
-                        return self.trigger_game_over("撞到了Boss！")
-
-            # AI snakes movement
-            foods_pos = [f.pos for f in [self.food, self.energy_food] if f]
-            for ai in self.ai_snakes[:]:
-                ai.update_ai(foods_pos)
-                ai.step()
-                ai_head = ai.head()
-                if self.food and ai_head == self.food.pos:
-                    self.food = None
-                    ai.step(grow=True)
-                if self.energy_food and ai_head == self.energy_food.pos:
-                    self.energy_food = None
-                    ai.step(grow=True)
-                if player_head in ai.body:
-                    return self.trigger_game_over("被AI蛇撞到了！")
-                if ai_head in self.snake.body:
-                    self.ai_snakes.remove(ai)
-                    for _ in range(5):
-                        pos = self.random_empty_cell()
-                        if pos:
-                            self.energy_food = EnergyFood(pos)
-
-            # Ghost hunters
-            for hunter in self.ghost_hunters:
-                if hunter.visible and hunter.get_grid_pos() == player_head and not self.ghost_mode:
-                    return self.trigger_game_over("被幽灵猎手抓住了！")
-
-            now = pygame.time.get_ticks()
-            # Food interactions
-            if self.food and player_head == self.food.pos:
-                ate_food = True
-                self.handle_food_eat(now)
-                self.particles.emit(player_head[0] * CELL_SIZE + CELL_SIZE // 2, GAME_AREA_Y + player_head[1] * CELL_SIZE + CELL_SIZE // 2, FOOD_COLOR, 25)
-                self.snake.trigger_glow(FOOD_COLOR, now)
-                self.events.publish("FOOD_EATEN", {"pos": player_head, "score": self.score, "combo": self.combo_multiplier})
-                self.food = None
-                if self.normal_food_eaten_total % FOOD_PER_OBSTACLE == 0:
-                    self.spawn_obstacle()
-
-            if self.energy_food and player_head == self.energy_food.pos:
-                ate_food = True  # Does not count for combo/boss
-                self.energy += 1
-                self.particles.emit(player_head[0] * CELL_SIZE + CELL_SIZE // 2, GAME_AREA_Y + player_head[1] * CELL_SIZE + CELL_SIZE // 2, ENERGY_FOOD_COLOR, 30)
-                self.snake.trigger_glow(ENERGY_FOOD_COLOR, now)
-                self.events.publish("ENERGY_EATEN", {"pos": player_head, "energy": self.energy})
-                self.energy_food = None
-
-            # Items
-            for item in self.items[:]:
-                if player_head == item.pos:
-                    item.apply(self)
-                    self.items.remove(item)
-
-            # Grow compensation if ate food
-            if ate_food and self.snake.body:
-                self.snake.body.append(self.snake.body[-1])
-
-            if self.food is None:
-                self.spawn_food()
+        self.fixed_stepper.update_fixed(self, dt)
 
     def update(self, dt: float) -> None:
         now = pygame.time.get_ticks()
@@ -336,9 +233,9 @@ class GameScene(Scene):
             self.boss.update(self.snake.head())
 
         # Timed spawns
-        if now - self.last_item_spawn_time > self.item_spawn_interval and len(self.items) < 2:
+        if now - self.last_item_spawn_time > self.item_spawn_interval and len(self.items) < int(self.tuning.max_items):
             self.spawn_item()
-        if now - self.last_ai_spawn_time > self.ai_spawn_interval and len(self.ai_snakes) < 1:
+        if now - self.last_ai_spawn_time > self.ai_spawn_interval and len(self.ai_snakes) < int(self.tuning.max_ai_snakes):
             self.spawn_ai_snake()
 
         # Timers/flags
@@ -396,35 +293,7 @@ class GameScene(Scene):
         self.grid_surface = surf
 
     def draw_hud(self, surface: pygame.Surface):
-        hud_surface = pygame.Surface((SCREEN_WIDTH, HUD_HEIGHT), pygame.SRCALPHA)
-        hud_surface.fill((10, 5, 20, 200))
-        surface.blit(hud_surface, (0, 0))
-        time_left_str = f"{max(0, (self.ghost_end_time - pygame.time.get_ticks()) // 1000)}秒" if self.ghost_mode else "关闭"
-        text = f"分数: {self.score}   能量: {self.energy}   幽灵模式: {time_left_str}"
-        if self.combo_multiplier > 1:
-            text += f"   连击: x{self.combo_multiplier}"
-        # 垂直居中，且保证底部至少 4px 边距
-        text_surf = self.ui.font_small.render(text, True, TEXT_COLOR)
-        text_h = text_surf.get_height()
-        text_y = max(4, (HUD_HEIGHT - text_h) // 2)
-        if HUD_HEIGHT - (text_y + text_h) < 4:
-            text_y = HUD_HEIGHT - text_h - 4
-        self.ui.draw_text_with_glow(surface, text, self.ui.font_small, TEXT_COLOR, (8, text_y))
-        if self.leaderboard:
-            hs_text = f"最高分: {self.leaderboard[0]['score']}"
-            hs_surf = self.ui.font_small.render(hs_text, True, (255, 215, 0))
-            hs_h = hs_surf.get_height()
-            hs_y = max(4, (HUD_HEIGHT - hs_h) // 2)
-            if HUD_HEIGHT - (hs_y + hs_h) < 4:
-                hs_y = HUD_HEIGHT - hs_h - 4
-            self.ui.draw_text_with_glow(surface, hs_text, self.ui.font_small, (255, 215, 0), (SCREEN_WIDTH - 120, hs_y))
-
+        self.hud_renderer.draw_hud(self, surface)
 
     def draw_bottom_bar(self, surface: pygame.Surface):
-        if self.energy > 0 and (pygame.time.get_ticks() // 400) % 2:
-            bar_y = SCREEN_HEIGHT - BOTTOM_BAR_HEIGHT
-            bar_surface = pygame.Surface((SCREEN_WIDTH, BOTTOM_BAR_HEIGHT), pygame.SRCALPHA)
-            bar_surface.fill((10, 5, 20, 180))
-            surface.blit(bar_surface, (0, bar_y))
-            self.ui.draw_text_with_glow(surface, "按空格使用幽灵模式技能", self.ui.font_small, (255, 255, 0), (SCREEN_WIDTH // 2, bar_y + BOTTOM_BAR_HEIGHT // 2), center=True)
-
+        self.hud_renderer.draw_bottom_bar(self, surface)

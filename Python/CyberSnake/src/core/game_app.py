@@ -1,12 +1,14 @@
 import pygame
 from typing import Optional, Type, Any
 
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, BG_COLOR, RENDER_FPS
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, BG_COLOR, RENDER_FPS, EVT_FOOD_EATEN, EVT_ENERGY_EATEN
 from .scene import Scene
+from .scene_registry import SceneRegistry
 from src.managers.ui_manager import UIManager
 from src.managers.event_bus import EventBus
 from src.managers.resource_loader import ResourceLoader
 from src.managers.settings import SettingsService
+from src.scenes.scene_catalog import register_default_scenes
 
 class GameApp:
     """Game application, manages window, clock and scene stack.
@@ -29,11 +31,14 @@ class GameApp:
         self.running = True
 
         # Services container (extendable)
+        scenes = SceneRegistry()
+        register_default_scenes(scenes)
         self.services: dict[str, Any] = {
             "ui": UIManager(),
             "events": EventBus(),
             "resources": ResourceLoader(),
             "settings": SettingsService(),
+            "scenes": scenes,
         }
 
         self.scene_stack: list[Scene] = []
@@ -57,6 +62,10 @@ class GameApp:
             scene.on_enter()
         except Exception:
             pass
+
+    def push_scene_key(self, scene_key: str) -> None:
+        scenes: SceneRegistry = self.services["scenes"]
+        self.push_scene(scenes.get(scene_key))
 
     def pop_scene(self):
         if self.scene_stack:
@@ -92,8 +101,8 @@ class GameApp:
                 pos = payload.get("pos")
                 energy = payload.get("energy")
                 print(f"[EVT] ENERGY_EATEN pos={pos} energy={energy}")
-        bus.subscribe("FOOD_EATEN", on_food_eaten)
-        bus.subscribe("ENERGY_EATEN", on_energy_eaten)
+        bus.subscribe(EVT_FOOD_EATEN, on_food_eaten)
+        bus.subscribe(EVT_ENERGY_EATEN, on_energy_eaten)
 
     def run(self):
         fixed_dt = 1.0 / 60.0
