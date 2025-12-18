@@ -2,7 +2,6 @@ import pygame
 from src.core.scene import Scene
 from src.managers.ui_manager import UIManager
 from src.managers.leaderboard import load_leaderboard
-from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class LeaderboardOverlayScene(Scene):
     """Modal overlay that shows TOP 10 leaderboard.

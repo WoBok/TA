@@ -3,7 +3,6 @@ from dataclasses import dataclass, field
 from typing import List, Tuple
 import time
 import pygame
-import random
 
 from config import CELL_SIZE, GAME_AREA_Y, GRID_WIDTH, GRID_HEIGHT
 
