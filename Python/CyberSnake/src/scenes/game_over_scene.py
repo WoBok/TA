@@ -1,7 +1,6 @@
 import pygame
 
 from src.core.scene import Scene
-from src.managers.ui_manager import UIManager
 from src.managers.leaderboard import is_high_score, add_entry, save_leaderboard
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, BG_COLOR, TEXT_COLOR
 
@@ -10,7 +9,7 @@ class GameOverScene(Scene):
 
     def __init__(self, app):
         super().__init__(app)
-        self.ui = UIManager()
+        self.ui = self.app.services["ui"]
         self.score = 0
         self.reason = ""
         self.leaderboard = []
@@ -29,6 +28,11 @@ class GameOverScene(Scene):
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         for e in events:
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_TAB:
+                from src.scenes.overlay_leaderboard import LeaderboardOverlayScene
+                self.app.push_scene(LeaderboardOverlayScene)
+                continue
+
             if self.entering_name:
                 if e.type == pygame.KEYDOWN:
                     if e.key == pygame.K_RETURN:
@@ -67,6 +71,8 @@ class GameOverScene(Scene):
         else:
             self.draw_game_over_summary(surface, center_x, center_y)
 
+        # 排行榜覆盖层由独立的 LeaderboardOverlayScene 负责
+
     def draw_name_input(self, surface, cx, cy):
         self.ui.draw_text_with_glow(surface, "新纪录！", self.ui.font_big, (255, 215, 0), (cx, cy - 80), center=True)
         self.ui.draw_text_with_glow(surface, "请输入你的名字：", self.ui.font_small, TEXT_COLOR, (cx, cy - 30), center=True)
@@ -89,4 +95,5 @@ class GameOverScene(Scene):
             self.ui.draw_text_with_glow(surface, high_score_text, self.ui.font_medium, (255, 215, 0), (cx, cy + 90), center=True)
         
         self.ui.draw_text_with_glow(surface, "按 R 重新开始，ESC 返回菜单", self.ui.font_small, (200, 200, 220), (cx, SCREEN_HEIGHT - 40), center=True)
+
 

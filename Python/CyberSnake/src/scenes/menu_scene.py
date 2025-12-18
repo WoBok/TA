@@ -1,7 +1,6 @@
 import pygame
 
 from src.core.scene import Scene
-from src.managers.ui_manager import UIManager
 from src.managers.leaderboard import load_leaderboard
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, BG_COLOR, TEXT_COLOR, GRID_COLOR, CELL_SIZE
 
@@ -11,38 +10,42 @@ class MenuScene(Scene):
     """
     def __init__(self, app):
         super().__init__(app)
-        self.ui = UIManager()
+        self.ui = self.app.services["ui"]
         self.leaderboard = load_leaderboard()
-        self.show_leaderboard = False
+        self.grid_surface = None
+        self._build_grid_surface()
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         for e in events:
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_ESCAPE:
                     self.app.running = False
-                elif e.key == pygame.K_SPACE and not self.show_leaderboard:
+                elif e.key == pygame.K_SPACE:
                     from src.scenes.game_scene import GameScene
                     self.app.push_scene(GameScene)
                 elif e.key == pygame.K_TAB:
-                    self.show_leaderboard = not self.show_leaderboard
+                    from src.scenes.overlay_leaderboard import LeaderboardOverlayScene
+                    self.app.push_scene(LeaderboardOverlayScene)
+                elif e.key == pygame.K_o:
+                    from src.scenes.overlay_settings import SettingsOverlayScene
+                    self.app.push_scene(SettingsOverlayScene)
 
     def update(self, dt: float) -> None:
         pass
 
+    def _build_grid_surface(self):
+        surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+        for x in range(0, SCREEN_WIDTH, CELL_SIZE):
+            pygame.draw.line(surf, GRID_COLOR, (x, 0), (x, SCREEN_HEIGHT), 1)
+        for y in range(0, SCREEN_HEIGHT, CELL_SIZE):
+            pygame.draw.line(surf, GRID_COLOR, (0, y), (SCREEN_WIDTH, y), 1)
+        self.grid_surface = surf
+
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(BG_COLOR)
-        self.draw_grid(surface)
-
-        if self.show_leaderboard:
-            self.draw_leaderboard_overlay(surface)
-        else:
-            self.draw_start_screen(surface)
-
-    def draw_grid(self, surface: pygame.Surface):
-        for x in range(0, SCREEN_WIDTH, CELL_SIZE):
-            pygame.draw.line(surface, GRID_COLOR, (x, 0), (x, SCREEN_HEIGHT), 1)
-        for y in range(0, SCREEN_HEIGHT, CELL_SIZE):
-            pygame.draw.line(surface, GRID_COLOR, (0, y), (SCREEN_WIDTH, y), 1)
+        if self.grid_surface:
+            surface.blit(self.grid_surface, (0, 0))
+        self.draw_start_screen(surface)
 
     def draw_start_screen(self, surface: pygame.Surface):
         center_x, center_y = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
@@ -63,21 +66,3 @@ class MenuScene(Scene):
         self.ui.draw_text_with_glow(surface, "按空格键开始 (ESC 退出)", self.ui.font_small, tip_color, (center_x, SCREEN_HEIGHT - 60), center=True)
         self.ui.draw_text_with_glow(surface, "方向键/WASD 移动 | 空格: 幽灵模式 | Tab: 排行榜", self.ui.font_small, (190, 190, 210), (center_x, SCREEN_HEIGHT - 35), center=True)
 
-    def draw_leaderboard_overlay(self, surface: pygame.Surface):
-        overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
-        overlay.fill((10, 5, 20, 230))
-        surface.blit(overlay, (0, 0))
-        center_x = SCREEN_WIDTH // 2
-        self.ui.draw_text_with_glow(surface, "排行榜 TOP 10", self.ui.font_big, (255, 215, 0), (center_x, 40), center=True)
-        y_offset = 90
-        if not self.leaderboard:
-            self.ui.draw_text_with_glow(surface, "暂无记录", self.ui.font_small, TEXT_COLOR, (center_x, y_offset + 40), center=True)
-        else:
-            for i, entry in enumerate(self.leaderboard):
-                rank_text = f"{i+1}. {entry['name']}"
-                score_text = f"{entry['score']}"
-                color = (255, 215, 0) if i == 0 else (200, 200, 255) if i == 1 else (255, 0, 255) if i == 2 else TEXT_COLOR
-                self.ui.draw_text_with_glow(surface, rank_text, self.ui.font_small, color, (center_x - 150, y_offset))
-                self.ui.draw_text_with_glow(surface, score_text, self.ui.font_small, color, (center_x + 100, y_offset))
-                y_offset += 30
-        self.ui.draw_text_with_glow(surface, "按 Tab 返回", self.ui.font_small, (200, 200, 220), (center_x, SCREEN_HEIGHT - 40), center=True)
