@@ -14,7 +14,7 @@ from src.scenes.scene_keys import (
 
 def register_default_scenes(registry: SceneRegistry) -> None:
     from src.scenes.menu_scene import MenuScene
-    from src.scenes.game_scene import GameScene
+    from src.scenes.ecs_game_scene import ECSGameScene  # Use restored ECS game scene
     from src.scenes.game_over_scene import GameOverScene
     from src.scenes.overlay_leaderboard import LeaderboardOverlayScene
     from src.scenes.overlay_help import HelpOverlayScene
@@ -22,7 +22,7 @@ def register_default_scenes(registry: SceneRegistry) -> None:
     from src.scenes.overlay_settings import SettingsOverlayScene
 
     registry.register(SCENE_MENU, MenuScene)
-    registry.register(SCENE_GAME, GameScene)
+    registry.register(SCENE_GAME, ECSGameScene)  # Use ECS game scene with all original features
     registry.register(SCENE_GAME_OVER, GameOverScene)
     registry.register(SCENE_OVERLAY_LEADERBOARD, LeaderboardOverlayScene)
     registry.register(SCENE_OVERLAY_HELP, HelpOverlayScene)
