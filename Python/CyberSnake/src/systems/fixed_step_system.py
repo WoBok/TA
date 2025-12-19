@@ -41,9 +41,9 @@ class FixedStepSystem:
             ate_food = False
             game.snake.step(ate_food)
             player_head = game.snake.head()
-            player_head, reason = self.pre_enemy_pipeline.apply(game, player_head)
-            if reason:
-                return game.trigger_game_over(reason)
+            player_head, result = self.pre_enemy_pipeline.apply(game, player_head)
+            if result:
+                return game.trigger_game_over(result.reason)
 
             foods_pos = [f.pos for f in [game.food, game.energy_food] if f]
             for ai in game.ai_snakes[:]:
@@ -63,9 +63,9 @@ class FixedStepSystem:
                         if pos:
                             game.energy_food = EnergyFood(pos)
 
-            player_head, reason = self.post_enemy_pipeline.apply(game, player_head)
-            if reason:
-                return game.trigger_game_over(reason)
+            player_head, result = self.post_enemy_pipeline.apply(game, player_head)
+            if result:
+                return game.trigger_game_over(result.reason)
 
             now = pygame.time.get_ticks()
 

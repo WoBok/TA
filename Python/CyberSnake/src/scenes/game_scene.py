@@ -3,6 +3,7 @@ import random
 from typing import List
 
 from src.core.scene import Scene
+from src.rules.step_rules import create_default_rule_engine
 from src.systems.fixed_step_system import FixedStepSystem
 from src.systems.game_tuning import GameTuning
 from src.systems.hud_renderer import HudRenderer
@@ -44,7 +45,11 @@ class GameScene(Scene):
         self.tuning: GameTuning = GameTuning.from_settings(self.settings)
 
         self.spawner = SpawnSystem()
-        self.fixed_stepper = FixedStepSystem()
+        self.rule_engine = create_default_rule_engine()
+        self.fixed_stepper = FixedStepSystem(
+            pre_enemy_pipeline=self.rule_engine.build_pipeline("pre"),
+            post_enemy_pipeline=self.rule_engine.build_pipeline("post"),
+        )
         self.hud_renderer = HudRenderer()
 
         self.input_manager = InputManager()

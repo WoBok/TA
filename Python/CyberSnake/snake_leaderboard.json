@@ -1,6 +1,10 @@
 [
   {
     "name": "WoBok",
+    "score": 222
+  },
+  {
+    "name": "WoBok",
     "score": 123
   },
   {
@@ -34,9 +38,5 @@
   {
     "name": "WoBok",
     "score": 37
-  },
-  {
-    "name": "WoBok",
-    "score": 35
   }
 ]
